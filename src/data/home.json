@@ -1,6 +1,6 @@
 {
   "name": "John Doe",
-  "photoUrl": "favicon.svg",
+  "photoUrl": "profile_zoomin_nobg.png",
   "intro": "A brief, compelling introduction about who you are and what you do. Mention your core philosophy, your passion for building digital products, and your drive for creating efficient, high-impact solutions.",
   "introHtml": "A brief, compelling introduction about who you are and what you do. Mention your core <span class='text-white font-bold'>philosophy</span>, your passion for building digital products, and your drive for creating <span class='text-white font-bold'>efficient</span>, <span class='text-white font-bold'>high-impact</span> solutions.",
   "webpageTitle": "John Doe",

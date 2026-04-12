@@ -1,22 +1,36 @@
 ---
 import ProjectCard from './project-card.astro';
-import projectsData from '../data/projects.json';
+import { projects } from '../data';
+
+// Map projects and add some visual properties for the cards
+const projectsData = projects.map((p, index) => ({
+  ...p,
+  // We will assign a gradient based on the index to give some variety
+  gradientIndex: index % 5
+}));
 ---
 
-<section id="projects" class="py-4 md:py-20 px-4 md:px-0 overflow-hidden">
-  <div class="container mx-auto">
-    <div class="mb-16">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-2 flex items-center gap-4">
-          <span class="text-accent">/</span> Featured Projects
-        </h2>
-      <p class="text-gray font-body text-sm max-w-md">
-        A selection of professional work, published apps, and experimental prototypes.
+<section id="projects" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
+  <!-- Background Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="container mx-auto relative z-10">
+    <div class="mb-16 md:mb-20">
+      <h2 class="text-3xl md:text-5xl font-heading font-bold text-white mb-4 flex items-center gap-4">
+        <span class="text-accent">/</span> Featured Projects
+      </h2>
+      <p class="text-gray-400 font-body text-base md:text-lg max-w-2xl leading-relaxed">
+        A selection of enterprise architectures, consulting engagements, and published applications. 
+        Each project represents a unique challenge solved with resilient software engineering.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {projectsData.map((project) => (
-        <ProjectCard project={project} />
+    <!-- Original 3-Column Grid Configuration -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-max items-stretch">
+      {projectsData.map((project, index) => (
+        <div class="project-wrapper">
+           <ProjectCard project={project} />
+        </div>
       ))}
     </div>
   </div>
@@ -55,17 +69,3 @@ import projectsData from '../data/projects.json';
   // Support for Astro View Transitions
   document.addEventListener('astro:after-swap', initProjectReveal);
 </script>
-
-<style>
-  /* Initial state of the card */
-  .project-card {
-    transform: translateY(20px) scale(0.95);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Revealed state */
-  .project-card.reveal {
-    opacity: 1 !important;
-    transform: translateY(0) scale(1);
-  }
-</style>

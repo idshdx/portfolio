@@ -1,51 +1,61 @@
 ---
 import { Icon } from 'astro-icon/components';
 const { project } = Astro.props;
-
-const isSlider = project.images.length > 1;
 ---
 
-<div class="project-card group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500">
-  <div class="aspect-video overflow-hidden relative bg-[#1a1a1a]">
+<div class="project-card group relative flex flex-col h-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500">
+  
+  <div class="h-32 w-full relative overflow-hidden bg-[#1a1a1a] flex-shrink-0">
     <div class="absolute inset-0 bg-accent/10 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
     
-    <div class={`w-full h-full relative ${isSlider ? 'image-slider' : ''}`}>
-      {project.images.map((img, index) => (
-        <img 
-          src={img}
-          alt={`${project.title} screenshot ${index + 1}`}
-          onerror="this.onerror=null;this.src='placeholder.jpeg';"
-          class={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 ${index === 0 ? 'opacity-100 z-0' : 'opacity-0 z-[-1]'}`}
-        />
-      ))}
+    <div class="w-full h-full relative">
+      <!-- Fallback safely handles missing image arrays -->
+      <img 
+        src={project.images?.[0] || '/placeholder.jpeg'} 
+        alt={`${project.title} cover`}
+        onerror="this.onerror=null;this.src='/placeholder.jpeg';"
+        class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 z-0 opacity-100"
+      />
     </div>
     
-    <div class="absolute top-3 right-3 flex gap-2 z-20">
-      {project.platforms.map((p) => (
-        <div class="p-1.5 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-white/80">
-          <Icon name={`mdi:${p}`} class="w-4 h-4" />
-        </div>
-      ))}
-    </div>
+    {project.platforms && (
+      <div class="absolute top-3 right-3 flex gap-2 z-20">
+        {project.platforms.map((p) => (
+          <div class="p-1.5 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-white/80">
+            <Icon name={`mdi:${p}`} class="w-4 h-4" />
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 
-  <div class="p-6 space-y-4">
+  <div class="p-6 flex flex-col flex-grow space-y-4">
+    
     <div class="flex justify-between items-start">
       <div>
         <span class="text-accent text-[10px] uppercase tracking-widest font-bold">{project.category}</span>
         <h3 class="text-xl font-heading font-bold text-white mt-1">{project.title}</h3>
       </div>
-      <a href={project.link} target="_blank" class="text-white/40 hover:text-accent transition-colors">
-        <Icon name="mdi:open-in-new" class="w-6 h-6" />
-      </a>
+      {project.link && (
+        <a href={project.link} target="_blank" class="text-white/40 hover:text-accent transition-colors flex-shrink-0 mt-1" aria-label={`Visit ${project.title}`}>
+          <Icon name="mdi:open-in-new" class="w-6 h-6" />
+        </a>
+      )}
     </div>
 
-    <p class="text-gray-400 text-sm font-body line-clamp-3">
-      {project.description}
-    </p>
+    <!-- Expandable Description Section -->
+    <div class="description-container relative flex-grow flex flex-col">
+      <div class="text-gray-400 text-sm font-body line-clamp-3 transition-all duration-300 description-content w-full whitespace-pre-wrap">
+        {Array.isArray(project.description) ? project.description.join('\n') : project.description}
+      </div>
+      <button class="read-more-btn mt-2 inline-block text-left text-accent text-xs font-bold hover:underline bg-transparent border-none cursor-pointer focus:outline-none w-max">
+        Read more
+      </button>
+    </div>
 
-    <div class="flex flex-wrap gap-2 pt-2">
-      {project.tech.map((t) => (
+    <!-- Tech Stack -->
+    <div class="flex flex-wrap gap-2 pt-2 mt-auto">
+      {project.tech && project.tech.map((t) => (
         <span class="px-2 py-1 bg-white/5 rounded-md text-[10px] text-white/60 border border-white/5">
           {t}
         </span>
@@ -55,31 +65,39 @@ const isSlider = project.images.length > 1;
 </div>
 
 <script>
-  function initSliders() {
-    const sliders = document.querySelectorAll('.image-slider');
+  function initReadMore() {
+    const btns = document.querySelectorAll('.read-more-btn');
     
-    sliders.forEach(slider => {
-      const images = slider.querySelectorAll('img');
-      if (images.length <= 1) return;
+    btns.forEach(btn => {
+      if(btn.getAttribute('data-init')) return;
+      btn.setAttribute('data-init', 'true');
 
-      let currentIndex = 0;
-      setInterval(() => {
-        // Hide current
-        images[currentIndex].classList.remove('opacity-100', 'z-0');
-        images[currentIndex].classList.add('opacity-0', 'z-[-1]');
-        
-        // Move to next
-        currentIndex = (currentIndex + 1) % images.length;
-        
-        // Show next
-        images[currentIndex].classList.remove('opacity-0', 'z-[-1]');
-        images[currentIndex].classList.add('opacity-100', 'z-0');
-      }, 3500);
+      // We wrap height calculation in setTimeout so fonts load
+      setTimeout(() => {
+        const container = btn.previousElementSibling;
+        // Check if content is actually overflowing
+        if (container.scrollHeight <= container.clientHeight + 2) {
+          btn.style.display = 'none';
+        }
+      }, 200);
+
+      btn.addEventListener('click', (e) => {
+        const container = e.target.previousElementSibling;
+        if (container.classList.contains('line-clamp-3')) {
+          container.classList.remove('line-clamp-3');
+          e.target.textContent = 'Show less';
+        } else {
+          container.classList.add('line-clamp-3');
+          e.target.textContent = 'Read more';
+        }
+      });
     });
   }
 
-  initSliders();
-  document.addEventListener('astro:after-swap', initSliders);
+  // Ensure scripts run properly with normal and Astro loads
+  window.addEventListener('load', initReadMore);
+  document.addEventListener('astro:page-load', initReadMore);
+  document.addEventListener('astro:after-swap', initReadMore);
 </script>
 
 <style is:global>
