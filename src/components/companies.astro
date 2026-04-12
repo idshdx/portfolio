@@ -1,0 +1,92 @@
+---
+const companies = [
+  { name: 'Avaya', icon: '/companies/avaya.svg' },
+  { name: 'Luxoft', icon: '/companies/luxoft.svg' },
+  { name: 'ING Bank', icon: '/companies/ing-bank.svg' },
+  { name: 'Superbet', icon: '/companies/superbet.svg' },
+  { name: 'GSK', icon: '/companies/gsk.svg' },
+  { name: 'Cognizant', icon: '/companies/cognizant.svg' },
+  { name: 'IBM', icon: '/companies/ibm.svg' },
+  { name: 'Extia', icon: '/companies/extia.png' },
+  { name: 'Streamwide', icon: '/companies/streamwide.jpg' },
+  { name: 'RoundAssist', icon: '/companies/roundassist.png' },
+  { name: 'Pentalog', icon: '/companies/pentalog.png' },
+  { name: 'CBS', icon: '/companies/cbs.png' }
+];
+
+// Using 3 tracks to ensure the screen is filled even on ultra-wide monitors
+const tracks = [1, 2, 3];
+---
+
+<section id="companies" class="py-10 border-y border-white/5 bg-white/[0.02] overflow-hidden relative">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-center text-[10px] text-gray/60 font-mono uppercase tracking-[0.2em] mb-8 reveal-content">Trusted By & Collaborated With</p>
+  </div>
+  
+  <div class="relative group reveal-content" style="animation-delay: 200ms;">
+    <!-- Gradient masks for smooth fading on edges -->
+    <div class="absolute top-0 bottom-0 left-0 w-24 md:w-56 z-10 bg-linear-to-r from-background to-transparent pointer-events-none"></div>
+    <div class="absolute top-0 bottom-0 right-0 w-24 md:w-56 z-10 bg-linear-to-l from-background to-transparent pointer-events-none"></div>
+    
+    <!-- Scrolling content -->
+    <div class="marquee-container flex">
+      {tracks.map((track, i) => (
+        <div class="marquee-track flex items-center shrink-0" aria-hidden={i !== 0 ? "true" : undefined}>
+          {companies.map((company) => (
+            <div class="logo-wrapper flex items-center justify-center px-3 md:px-5 transition-all duration-300">
+              <div class="bg-white/95 px-5 py-2.5 rounded-xl shadow-[0_0_10px_rgba(255,255,255,0.02)] border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] group/logo">
+                <img 
+                  src={company.icon} 
+                  alt={company.name} 
+                  title={company.name}
+                  class="brand-logo h-5 md:h-7 w-auto max-w-[110px] md:max-w-[160px] object-contain opacity-60 grayscale transition-all duration-500 group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-container {
+    display: flex;
+    width: 100%;
+    /* Ensure no wrapping so children stay inline */
+    white-space: nowrap;
+  }
+  
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+  
+  /* Pause animation on hover */
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Reveal animations */
+  .reveal-content {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: revealIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes revealIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
