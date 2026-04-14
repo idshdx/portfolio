@@ -17,7 +17,7 @@ interface ProfileData {
 const isApiLive = import.meta.env.PROD; // Auto true in production
 const BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 
-let data: ProfileData = { webpageTitle: personalInfo.name };
+let data: ProfileData = { webpageTitle: `${personalInfo.name} — Fullstack Engineer` };
 
 if (isApiLive && BASE_URL) {
   try {

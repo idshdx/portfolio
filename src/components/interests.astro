@@ -1,97 +1,79 @@
 ---
-import { interests } from "../data";
-import type { InterestLabel } from "../data";
+import { Icon } from "astro-icon/components";
 
-// Color mapping for interest labels
-const labelColors: Record<InterestLabel, { bg: string; text: string; border: string; glow: string }> = {
-  Core: {
-    bg: "bg-accent/15",
-    text: "text-accent",
-    border: "border-accent/30",
-    glow: "shadow-[0_0_12px_rgba(164,118,255,0.15)]",
+const pillars = [
+  {
+    icon: "mdi:code-braces-box",
+    title: "What I Build",
+    body: "Fullstack web systems — backend-heavy with NestJS, Node.js, and TypeScript, deployed on AWS and Azure. I specialize in migrating legacy monoliths to cloud-native microservices, building secure APIs, and shipping developer tooling. On the side, I create open-source privacy-first tools like <a href='https://github.com/idshdx/lockpost' target='_blank' rel='noopener' class='text-accent hover:underline'>Lockpost</a>.",
   },
-  Active: {
-    bg: "bg-emerald-500/15",
-    text: "text-emerald-400",
-    border: "border-emerald-500/30",
-    glow: "shadow-[0_0_12px_rgba(52,211,153,0.15)]",
+  {
+    icon: "mdi:shield-lock-outline",
+    title: "What I Care About",
+    body: "Privacy-first design, software security, and developer experience are the threads that connect my work. I run hardened OS stacks — QubesOS, GrapheneOS, NixOS — for daily use and research. I'm drawn to functional programming, distributed systems, and any problem where strong defaults protect users.",
   },
-  Exploring: {
-    bg: "bg-sky-500/15",
-    text: "text-sky-400",
-    border: "border-sky-500/30",
-    glow: "shadow-[0_0_12px_rgba(56,189,248,0.15)]",
+  {
+    icon: "mdi:compass-outline",
+    title: "What I'm Looking For",
+    body: "Roles where security, privacy, or developer tooling are first-class concerns — ideally remote, with an engineering-led culture. I thrive in teams that value technical depth, ship iteratively, and treat code quality as a feature, not an afterthought.",
+    isPlaceholder: true,
   },
-  Old: {
-    bg: "bg-gray-500/15",
-    text: "text-gray-400",
-    border: "border-gray-500/30",
-    glow: "",
-  },
-};
-
-// Show the latest (non-Old) interests
-const latestInterests = interests.filter((i) => i.label !== "Old").slice(0, 4);
+];
 ---
 
-<section id="interests" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
+<section id="about" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
   <!-- Background Glow -->
   <div
     class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/4 rounded-full blur-[100px] pointer-events-none"
   ></div>
 
   <div class="container mx-auto relative z-10">
-    <div class="interests-reveal opacity-0">
-      <!-- Section Header (matches Contact Me / Featured Projects style) -->
+    <div class="about-reveal opacity-0">
+      <!-- Section Header -->
       <div class="mb-16">
         <h2
           class="text-3xl md:text-4xl font-heading font-bold text-white mb-2 flex items-center gap-4"
         >
-          <span class="text-accent">/</span> Latest Interests
+          <span class="text-accent">/</span> About
         </h2>
-        <p class="text-gray font-body text-sm max-w-md">
-          The topics and technologies I'm currently exploring, actively working
-          with, or consider fundamental to my craft.
+        <p class="text-gray font-body text-sm max-w-lg">
+          The short version — what I do, what drives me, and what's next.
         </p>
       </div>
 
-      <!-- Interest Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <!-- Pillar Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {
-          latestInterests.map((interest) => {
-            const colors = labelColors[interest.label];
-            return (
-              <div class={`interest-card group relative p-6 rounded-2xl border border-white/8 bg-white/[0.03] backdrop-blur-sm hover:border-accent/25 hover:bg-white/[0.05] transition-all duration-500 ${colors.glow}`}>
-                {/* Label Badge */}
-                <div class="flex items-center justify-between mb-4">
-                  <span
-                    class={`inline-flex items-center gap-1.5 text-[11px] font-medium tracking-wider uppercase px-3 py-1 rounded-full border ${colors.bg} ${colors.text} ${colors.border}`}
-                  >
-                    <span class="relative flex h-1.5 w-1.5">
-                      <span
-                        class={`absolute inline-flex h-full w-full rounded-full opacity-60 ${interest.label === "Core" || interest.label === "Active" ? "animate-ping" : ""} ${colors.bg}`}
-                      />
-                      <span
-                        class={`relative inline-flex rounded-full h-1.5 w-1.5 ${colors.text.replace("text-", "bg-")}`}
-                      />
-                    </span>
-                    {interest.label}
-                  </span>
+          pillars.map((pillar, i) => (
+            <div class={`about-card group relative p-7 rounded-2xl border border-white/8 bg-white/[0.03] backdrop-blur-sm hover:border-accent/25 hover:bg-white/[0.05] transition-all duration-500`}>
+              {/* Icon */}
+              <div class="mb-5 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                  <Icon name={pillar.icon} class="w-5 h-5 text-accent" />
                 </div>
-
-                {/* Content */}
-                <h3 class="text-lg font-heading font-semibold text-white mb-2 group-hover:text-accent/90 transition-colors duration-300">
-                  {interest.title}
+                <h3 class="text-lg font-heading font-semibold text-white group-hover:text-accent/90 transition-colors duration-300">
+                  {pillar.title}
                 </h3>
-                <p class="text-gray-400 text-sm font-body leading-relaxed">
-                  {interest.description}
-                </p>
-
-                {/* Hover border glow effect */}
-                <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border border-accent/10" />
               </div>
-            );
-          })
+
+              {/* Body */}
+              <p class="text-gray-400 text-sm font-body leading-relaxed" set:html={pillar.body} />
+
+              {/* Placeholder badge */}
+              {pillar.isPlaceholder && (
+                <div class="mt-4 inline-flex items-center gap-1.5 text-[10px] font-medium tracking-wider uppercase px-3 py-1 rounded-full border bg-amber-500/10 text-amber-400 border-amber-500/25">
+                  <span class="relative flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping bg-amber-500/40" />
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400" />
+                  </span>
+                  Customize this
+                </div>
+              )}
+
+              {/* Hover border glow */}
+              <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border border-accent/10" />
+            </div>
+          ))
         }
       </div>
     </div>
@@ -99,16 +81,16 @@ const latestInterests = interests.filter((i) => i.label !== "Old").slice(0, 4);
 </section>
 
 <style>
-  .interests-reveal {
+  .about-reveal {
     transform: translateY(30px);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .interests-reveal.reveal {
+  .about-reveal.reveal {
     opacity: 1 !important;
     transform: translateY(0);
   }
 
-  .interest-card {
+  .about-card {
     opacity: 0;
     transform: translateY(20px);
     transition:
@@ -118,27 +100,24 @@ const latestInterests = interests.filter((i) => i.label !== "Old").slice(0, 4);
       background-color 0.5s ease,
       box-shadow 0.5s ease;
   }
-  .interests-reveal.reveal .interest-card {
+  .about-reveal.reveal .about-card {
     opacity: 1;
     transform: translateY(0);
   }
-  .interests-reveal.reveal .interest-card:nth-child(1) {
+  .about-reveal.reveal .about-card:nth-child(1) {
     transition-delay: 0.05s;
   }
-  .interests-reveal.reveal .interest-card:nth-child(2) {
+  .about-reveal.reveal .about-card:nth-child(2) {
     transition-delay: 0.15s;
   }
-  .interests-reveal.reveal .interest-card:nth-child(3) {
+  .about-reveal.reveal .about-card:nth-child(3) {
     transition-delay: 0.25s;
-  }
-  .interests-reveal.reveal .interest-card:nth-child(4) {
-    transition-delay: 0.35s;
   }
 </style>
 
 <script>
-  const revealInterests = () => {
-    const section = document.querySelector(".interests-reveal");
+  const revealAbout = () => {
+    const section = document.querySelector(".about-reveal");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -149,6 +128,6 @@ const latestInterests = interests.filter((i) => i.label !== "Old").slice(0, 4);
     );
     if (section) observer.observe(section);
   };
-  revealInterests();
-  document.addEventListener("astro:after-swap", revealInterests);
+  revealAbout();
+  document.addEventListener("astro:after-swap", revealAbout);
 </script>

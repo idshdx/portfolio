@@ -24,9 +24,9 @@ const BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 const localData: ProfileData = {
   name: personalInfo.name,
   photoUrl: "profile_nobg.png",
-  intro: "A brief, compelling introduction about who you are and what you do.",
+  intro: "Fullstack engineer building secure, privacy-first software — from blockchain exchanges to loyalty platforms serving 1M+ users.",
   introHtml:
-    "A brief, compelling introduction about who you are and what you do.",
+    "I ship production systems at the intersection of <strong>security</strong>, <strong>privacy</strong>, and <strong>developer experience</strong>. Over the past decade I've migrated monoliths to microservices, built end-to-end encrypted tools, and scaled platforms across enterprise and startup environments.",
   resumeUrl: personalInfo.cv_pdf,
   socials: [
     { name: "GitHub", url: personalInfo.github, icon: "mdi:github" },
@@ -78,7 +78,7 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
   </div>
 
   <div class="reveal-content" style="animation-delay: 200ms;">
-    <p class="font-body font-light text-gray leading-relaxed">Hello, I'm</p>
+    <p class="font-body font-light text-accent/80 leading-relaxed tracking-wide text-sm uppercase">Fullstack Software Engineer</p>
   </div>
 
   <div
@@ -97,41 +97,29 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
     />
   </div>
 
-  <div class="mt-8 mb-4 reveal-content" style="animation-delay: 400ms;">
+  <div class="mt-8 mb-4 flex flex-col sm:flex-row gap-4 items-center reveal-content" style="animation-delay: 400ms;">
     <a
       href={resumeUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="group relative inline-flex items-center justify-center px-10 py-2 bg-white/5 border border-white/10 rounded-full text-white font-body transition-all duration-300
-             <!-- /* Mobile: Always active */ -->
-             border-accent/50 bg-accent/10 shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]
-             
-             <!-- /* Desktop: Reset and hover */ -->
-             md:border-white/10 md:bg-white/5 md:shadow-none md:hover:border-accent/50 md:hover:bg-accent/10 md:hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]
+      class="group relative inline-flex items-center justify-center px-10 py-3 bg-accent/10 border border-accent/50 rounded-full text-white font-body transition-all duration-300
+             shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)]
+             hover:bg-accent/20 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.35)]
              hover:scale-105"
     >
-      <div class="flex flex-col items-center justify-center text-center">
-        <span
-          class="tracking-wide text-sm md:text-base font-medium transition-transform duration-300 md:translate-y-2 md:group-hover:translate-y-0"
-        >
-          View Resume
-        </span>
-
-        <span
-          class="text-[10px] text-gray-400 font-light whitespace-nowrap transition-all duration-300
-                     /* Mobile: Always visible */
-                     opacity-100 translate-y-0
-                     /* Desktop: Hidden until hover */
-                     md:opacity-0 md:translate-y-1 md:group-hover:opacity-100 md:group-hover:translate-y-0"
-        >
-          Downloads PDF file
-        </span>
-      </div>
-
+      <span class="tracking-wide text-sm md:text-base font-medium">View Resume</span>
       <div
-        class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
-      >
-      </div>
+        class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      ></div>
+    </a>
+
+    <a
+      href="#contact"
+      class="group relative inline-flex items-center justify-center px-10 py-3 bg-white/5 border border-white/10 rounded-full text-white font-body transition-all duration-300
+             hover:border-accent/40 hover:bg-white/10
+             hover:scale-105"
+    >
+      <span class="tracking-wide text-sm md:text-base font-medium">Get in Touch</span>
     </a>
   </div>
 
