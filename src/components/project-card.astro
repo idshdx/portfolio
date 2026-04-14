@@ -46,7 +46,7 @@ const { project } = Astro.props;
     <!-- Expandable Description Section -->
     <div class="description-container relative flex-grow flex flex-col">
       <div class="text-gray-400 text-sm font-body line-clamp-3 transition-all duration-300 description-content w-full whitespace-pre-wrap">
-        {Array.isArray(project.description) ? project.description.join('\n') : project.description}
+        {project.caseStudy?.overview || (Array.isArray(project.description) ? project.description.join('\n') : project.description)}
       </div>
       <button class="read-more-btn mt-2 inline-block text-left text-accent text-xs font-bold hover:underline bg-transparent border-none cursor-pointer focus:outline-none w-max">
         Read more
@@ -61,6 +61,19 @@ const { project } = Astro.props;
         </span>
       ))}
     </div>
+
+    <!-- Case Study CTA -->
+    {project.caseStudy && (
+      <a
+        href={`/case-study/${project.caseStudy.slug}`}
+        class="mt-4 inline-flex items-center gap-2 text-accent text-sm font-bold hover:gap-3 transition-all duration-300 group/cta"
+      >
+        <span>View Case Study</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    )}
   </div>
 </div>
 

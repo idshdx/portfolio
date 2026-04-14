@@ -1,0 +1,561 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { projects } from "../../data";
+import type { Project } from "../../data";
+
+export async function getStaticPaths() {
+  const caseStudyProjects = projects.filter((p) => p.caseStudy);
+  return caseStudyProjects.map((project) => ({
+    params: { slug: project.caseStudy!.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const cs = project.caseStudy!;
+
+// Find next/prev case studies for navigation
+const caseStudyProjects = projects.filter((p) => p.caseStudy);
+const currentIndex = caseStudyProjects.findIndex(
+  (p) => p.caseStudy!.slug === cs.slug
+);
+const prevProject =
+  currentIndex > 0 ? caseStudyProjects[currentIndex - 1] : null;
+const nextProject =
+  currentIndex < caseStudyProjects.length - 1
+    ? caseStudyProjects[currentIndex + 1]
+    : null;
+---
+
+<Layout title={`${project.title} — Case Study`}>
+  <!-- Fixed Back Button -->
+  <a
+    href="/#projects"
+    id="back-btn"
+    class="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300 hover:text-accent hover:border-accent/40 backdrop-blur-md transition-all duration-300 group"
+  >
+    <Icon
+      name="mdi:arrow-left"
+      class="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+    />
+    <span class="hidden sm:inline">Back to Case Studies</span>
+  </a>
+
+  <article class="case-study-page">
+    <!-- ==================== HERO ==================== -->
+    <section class="hero-section relative w-full overflow-hidden -mx-2 sm:-mx-12 md:-mx-14 lg:-mx-28">
+      <!-- Hero Image -->
+      <div class="absolute inset-0 w-full h-full">
+        <img
+          src={cs.heroImage}
+          alt={`${project.title} hero`}
+          class="w-full h-full object-cover opacity-40"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background"
+        >
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-accent/5"
+        >
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28"
+      >
+        <div class="cs-reveal">
+          <span
+            class="inline-block px-4 py-1.5 bg-accent/15 border border-accent/30 rounded-full text-accent text-xs font-bold uppercase tracking-widest mb-6"
+          >
+            {project.category} · Case Study
+          </span>
+        </div>
+
+        <h1
+          class="cs-reveal text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-tight mb-6"
+          style="animation-delay: 100ms;"
+        >
+          {project.title}
+        </h1>
+
+        <p
+          class="cs-reveal text-lg md:text-xl text-gray-300 font-body leading-relaxed max-w-3xl"
+          style="animation-delay: 200ms;"
+        >
+          {cs.overview}
+        </p>
+
+        <!-- External Link -->
+        {
+          project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cs-reveal inline-flex items-center gap-2 mt-8 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-white hover:border-accent/40 hover:bg-accent/10 transition-all duration-300 group"
+              style="animation-delay: 300ms;"
+            >
+              <span class="text-sm font-medium">Visit Live Project</span>
+              <Icon
+                name="mdi:open-in-new"
+                class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              />
+            </a>
+          )
+        }
+      </div>
+    </section>
+
+    <!-- ==================== QUICK STATS ==================== -->
+    <section class="max-w-5xl mx-auto px-4 -mt-10 relative z-20">
+      <div
+        class="cs-reveal grid grid-cols-2 md:grid-cols-4 gap-4"
+        style="animation-delay: 350ms;"
+      >
+        <div
+          class="stats-card bg-white/5 border border-white/10 rounded-2xl p-5 text-center backdrop-blur-sm"
+        >
+          <Icon name="mdi:clock-outline" class="w-5 h-5 text-accent mx-auto mb-2" />
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">
+            Duration
+          </p>
+          <p class="text-white font-heading font-bold text-sm">{cs.duration}</p>
+        </div>
+        <div
+          class="stats-card bg-white/5 border border-white/10 rounded-2xl p-5 text-center backdrop-blur-sm"
+        >
+          <Icon name="mdi:account-outline" class="w-5 h-5 text-accent mx-auto mb-2" />
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">
+            Role
+          </p>
+          <p class="text-white font-heading font-bold text-sm">{cs.role}</p>
+        </div>
+        <div
+          class="stats-card bg-white/5 border border-white/10 rounded-2xl p-5 text-center backdrop-blur-sm"
+        >
+          <Icon name="mdi:account-group-outline" class="w-5 h-5 text-accent mx-auto mb-2" />
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">
+            Team
+          </p>
+          <p class="text-white font-heading font-bold text-sm">{cs.team}</p>
+        </div>
+        <div
+          class="stats-card bg-white/5 border border-white/10 rounded-2xl p-5 text-center backdrop-blur-sm"
+        >
+          <Icon name="mdi:tag-outline" class="w-5 h-5 text-accent mx-auto mb-2" />
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">
+            Category
+          </p>
+          <p class="text-white font-heading font-bold text-sm">
+            {project.category}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== THE CHALLENGE ==================== -->
+    <section class="max-w-4xl mx-auto px-4 mt-20 md:mt-28">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:alert-circle-outline" class="w-5 h-5 text-red-400" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            The Challenge
+          </h2>
+        </div>
+        <div
+          class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8"
+        >
+          <p
+            class="text-gray-300 font-body text-base md:text-lg leading-relaxed"
+          >
+            {cs.challenge}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== THE APPROACH ==================== -->
+    <section class="max-w-4xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:lightbulb-outline" class="w-5 h-5 text-accent" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            The Approach
+          </h2>
+        </div>
+      </div>
+
+      <div class="relative">
+        <!-- Vertical connector line -->
+        <div
+          class="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-accent/40 via-accent/20 to-transparent"
+        >
+        </div>
+
+        {
+          cs.approach.map((step, i) => (
+            <div class="cs-reveal relative flex gap-5 mb-6 last:mb-0 group">
+              {/* Step number */}
+              <div class="relative z-10 flex-shrink-0 w-10 h-10 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center group-hover:bg-accent/20 group-hover:border-accent/50 transition-all duration-300">
+                <span class="text-accent font-heading font-bold text-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              {/* Step content */}
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-5 flex-grow group-hover:border-accent/20 transition-all duration-300">
+                <p class="text-gray-300 font-body text-sm md:text-base leading-relaxed">
+                  {step}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ==================== KEY RESULTS ==================== -->
+    <section class="max-w-5xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-10 h-10 rounded-xl bg-green/10 border border-green/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:chart-line" class="w-5 h-5 text-green" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            Key Results
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {
+          cs.results.map((result, i) => (
+            <div
+              class="cs-reveal result-card group bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-accent/30 transition-all duration-500"
+              style={`animation-delay: ${i * 100}ms;`}
+            >
+              <p class="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">
+                {result.metric}
+              </p>
+              <p class="text-3xl md:text-4xl font-heading font-bold text-accent mb-3 group-hover:scale-105 transition-transform origin-left">
+                {result.value}
+              </p>
+              <p class="text-gray-400 font-body text-sm leading-relaxed">
+                {result.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ==================== TECHNICAL DEEP DIVE ==================== -->
+    <section class="max-w-4xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:code-braces" class="w-5 h-5 text-blue-400" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            Technical Deep Dive
+          </h2>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        {
+          cs.techDeepDive.map((section, i) => (
+            <div
+              class="cs-reveal bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-accent/20 transition-all duration-300"
+              style={`animation-delay: ${i * 100}ms;`}
+            >
+              <h3 class="text-lg md:text-xl font-heading font-bold text-white mb-4 flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-accent" />
+                {section.heading}
+              </h3>
+              <p class="text-gray-400 font-body text-sm md:text-base leading-relaxed">
+                {section.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ==================== TECH STACK ==================== -->
+    <section class="max-w-4xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:layers-outline" class="w-5 h-5 text-accent" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            Tech Stack
+          </h2>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          {
+            project.tech.map((t) => (
+              <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 font-body hover:border-accent/30 hover:text-white transition-all duration-300">
+                {t}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KEY TAKEAWAYS ==================== -->
+    <section class="max-w-4xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="cs-reveal">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center"
+          >
+            <Icon name="mdi:star-outline" class="w-5 h-5 text-yellow-400" />
+          </div>
+          <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">
+            Key Takeaways
+          </h2>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        {
+          cs.keyTakeaways.map((takeaway, i) => (
+            <div
+              class="cs-reveal flex gap-4 items-start group"
+              style={`animation-delay: ${i * 80}ms;`}
+            >
+              <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center mt-0.5 group-hover:bg-accent/20 transition-colors">
+                <Icon
+                  name="mdi:check"
+                  class="w-4 h-4 text-accent"
+                />
+              </div>
+              <p class="text-gray-300 font-body text-sm md:text-base leading-relaxed">
+                {takeaway}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ==================== CASE STUDY NAVIGATION ==================== -->
+    <section class="max-w-5xl mx-auto px-4 mt-20 md:mt-28">
+      <div class="cs-reveal">
+        <div
+          class="border-t border-white/10 pt-10 flex flex-col sm:flex-row items-center justify-between gap-6"
+        >
+          <!-- Prev -->
+          <div class="flex-1">
+            {
+              prevProject && (
+                <a
+                  href={`/case-study/${prevProject.caseStudy!.slug}`}
+                  class="group flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
+                >
+                  <Icon
+                    name="mdi:arrow-left"
+                    class="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+                  />
+                  <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-wider">
+                      Previous
+                    </p>
+                    <p class="font-heading font-bold text-white group-hover:text-accent transition-colors">
+                      {prevProject.title}
+                    </p>
+                  </div>
+                </a>
+              )
+            }
+          </div>
+
+          <!-- Home -->
+          <a
+            href="/#projects"
+            class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300 hover:text-accent hover:border-accent/40 transition-all duration-300 flex items-center gap-2"
+          >
+            <Icon name="mdi:view-grid-outline" class="w-4 h-4" />
+            All Case Studies
+          </a>
+
+          <!-- Next -->
+          <div class="flex-1 text-right">
+            {
+              nextProject && (
+                <a
+                  href={`/case-study/${nextProject.caseStudy!.slug}`}
+                  class="group inline-flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
+                >
+                  <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-wider">
+                      Next
+                    </p>
+                    <p class="font-heading font-bold text-white group-hover:text-accent transition-colors">
+                      {nextProject.title}
+                    </p>
+                  </div>
+                  <Icon
+                    name="mdi:arrow-right"
+                    class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                  />
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER NAV ==================== -->
+    <footer class="max-w-5xl mx-auto px-4 mt-16 pb-12">
+      <div class="cs-reveal">
+        <div class="border-t border-white/10 pt-10">
+          <nav class="flex flex-wrap justify-center gap-x-10 gap-y-4">
+            <a href="/#home" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:home" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Home
+            </a>
+            <a href="/#skills" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:code-tags" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Skills
+            </a>
+            <a href="/#career" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:work" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Career
+            </a>
+            <a href="/#projects" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:computer" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Case Studies
+            </a>
+            <a href="/#contact" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:message" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Contact
+            </a>
+          </nav>
+
+          <p class="text-center text-gray-600 text-xs mt-8 font-body">
+            Andrei Botez &copy; {new Date().getFullYear()}
+          </p>
+        </div>
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  /* Scroll-triggered reveal animations */
+  .cs-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cs-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stats cards hover effect */
+  .stats-card {
+    transition: all 0.3s ease;
+  }
+  .stats-card:hover {
+    border-color: rgba(164, 118, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Result card counter animation */
+  .result-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .result-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--color-accent);
+    border-radius: 0 0 3px 3px;
+    transition: height 0.6s ease;
+  }
+  .result-card:hover::before {
+    height: 100%;
+  }
+
+  /* Hero section full bleed */
+  .hero-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+</style>
+
+<script>
+  function initCaseStudyReveals() {
+    const elements = document.querySelectorAll(".cs-reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Respect animation-delay via inline style
+            const el = entry.target as HTMLElement;
+            const delay = el.style.animationDelay
+              ? parseInt(el.style.animationDelay)
+              : 0;
+
+            setTimeout(() => {
+              el.classList.add("visible");
+            }, delay);
+
+            observer.unobserve(el);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+  }
+
+  // Run on load
+  window.addEventListener("load", initCaseStudyReveals);
+  document.addEventListener("astro:after-swap", initCaseStudyReveals);
+  // Also run immediately for elements above the fold
+  document.addEventListener("DOMContentLoaded", initCaseStudyReveals);
+</script>
