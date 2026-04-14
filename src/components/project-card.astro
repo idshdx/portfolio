@@ -13,6 +13,8 @@ const { project } = Astro.props;
       <img 
         src={project.images?.[0] || '/placeholder.jpeg'} 
         alt={`${project.title} cover`}
+        loading="lazy"
+        decoding="async"
         onerror="this.onerror=null;this.src='/placeholder.jpeg';"
         class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 z-0 opacity-100"
       />
@@ -48,7 +50,10 @@ const { project } = Astro.props;
       <div class="text-gray-400 text-sm font-body line-clamp-3 transition-all duration-300 description-content w-full whitespace-pre-wrap">
         {project.caseStudy?.overview || (Array.isArray(project.description) ? project.description.join('\n') : project.description)}
       </div>
-      <button class="read-more-btn mt-2 inline-block text-left text-accent text-xs font-bold hover:underline bg-transparent border-none cursor-pointer focus:outline-none w-max">
+      <button 
+        class="read-more-btn mt-2 inline-block text-left text-accent text-xs font-bold hover:underline bg-transparent border-none cursor-pointer w-max"
+        aria-expanded="false"
+      >
         Read more
       </button>
     </div>
@@ -95,13 +100,16 @@ const { project } = Astro.props;
       }, 200);
 
       btn.addEventListener('click', (e) => {
-        const container = e.target.previousElementSibling;
+        const button = e.target;
+        const container = button.previousElementSibling;
         if (container.classList.contains('line-clamp-3')) {
           container.classList.remove('line-clamp-3');
-          e.target.textContent = 'Show less';
+          button.textContent = 'Show less';
+          button.setAttribute('aria-expanded', 'true');
         } else {
           container.classList.add('line-clamp-3');
-          e.target.textContent = 'Read more';
+          button.textContent = 'Read more';
+          button.setAttribute('aria-expanded', 'false');
         }
       });
     });

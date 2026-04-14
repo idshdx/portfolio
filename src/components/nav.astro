@@ -43,6 +43,7 @@ const navItems: NavItem[] = [
 <div class="flex justify-center w-full">
   <nav
     id="main-nav"
+    aria-label="Main Navigation"
     class="fixed left-1/2 -translate-x-1/2 z-20 border-[1.2px] border-transparent transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
   >
     <div
@@ -50,6 +51,7 @@ const navItems: NavItem[] = [
       style="animation-delay: 700ms;"
     >
       <ul
+        role="list"
         class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-12 gap-1"
       >
         {
@@ -283,6 +285,12 @@ const navItems: NavItem[] = [
         targetElement.scrollIntoView({
           behavior: "smooth",
         });
+        // Move keyboard focus to the target section for accessibility
+        if (!targetElement.hasAttribute('tabindex')) {
+          targetElement.setAttribute('tabindex', '-1');
+          targetElement.style.outline = 'none';
+        }
+        targetElement.focus({ preventScroll: true });
       }
     });
   });

@@ -20,7 +20,7 @@ const tracks = [1, 2, 3];
 
 <section id="companies" class="py-10 border-y border-white/5 bg-white/[0.02] overflow-hidden relative">
   <div class="max-w-6xl mx-auto">
-    <p class="text-center text-[10px] text-gray/60 font-mono uppercase tracking-[0.2em] mb-8 reveal-content">Trusted By & Collaborated With</p>
+    <h2 class="text-center text-[10px] text-gray/60 font-mono uppercase tracking-[0.2em] mb-8 reveal-content">Trusted By & Collaborated With</h2>
   </div>
   
   <div class="relative group reveal-content" style="animation-delay: 200ms;">
@@ -39,6 +39,8 @@ const tracks = [1, 2, 3];
                   src={company.icon} 
                   alt={company.name} 
                   title={company.name}
+                  loading="lazy"
+                  decoding="async"
                   class="brand-logo h-5 md:h-7 w-auto max-w-[110px] md:max-w-[160px] object-contain opacity-60 grayscale transition-all duration-500 group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
                 />
               </div>
@@ -73,6 +75,12 @@ const tracks = [1, 2, 3];
     }
     100% {
       transform: translateX(-100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
     }
   }
 

@@ -42,6 +42,12 @@
     @apply bg-accent text-background;
   }
 
+  *:focus-visible {
+    outline: 2px dashed var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
   body {
     @apply font-body antialiased text-white;
     background: linear-gradient(
@@ -81,4 +87,15 @@
 ::-webkit-scrollbar-thumb:hover {
   /* @apply bg-gray-50; */
   background-color: color-mix(in srgb, var(--color-background), white 40%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

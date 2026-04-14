@@ -65,6 +65,8 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
       <img
         src={photoUrl}
         alt={name}
+        loading="eager"
+        decoding="async"
         onerror="this.onerror=null;this.src='/placeholder.jpeg';"
         class="w-full h-full object-cover scale-110"
       />
@@ -139,14 +141,17 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
         <a
           href={social.url}
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label={social.name}
           class="group relative flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
         >
           <Icon
             name={social.icon}
             class="w-8 h-8 text-white group-hover:text-accent transition-colors duration-300"
+            aria-hidden="true"
           />
 
-          <span class="absolute -bottom-6 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 text-xs text-accent font-body">
+          <span class="absolute -bottom-6 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 text-xs text-accent font-body" aria-hidden="true">
             {social.name}
           </span>
         </a>
