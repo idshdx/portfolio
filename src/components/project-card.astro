@@ -39,23 +39,18 @@ const { project } = Astro.props;
         <h3 class="text-xl font-heading font-bold text-white mt-1">{project.title}</h3>
       </div>
       {project.link && (
-        <a href={project.link} target="_blank" class="text-white/40 hover:text-accent transition-colors flex-shrink-0 mt-1" aria-label={`Visit ${project.title}`}>
-          <Icon name="mdi:open-in-new" class="w-6 h-6" />
+        <a href={project.link} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-white/40 hover:text-accent transition-colors flex-shrink-0 mt-1 text-xs font-bold" aria-label={`Visit ${project.title}`}>
+          <span>View</span>
+          <Icon name="mdi:open-in-new" class="w-4 h-4" />
         </a>
       )}
     </div>
 
     <!-- Expandable Description Section -->
     <div class="description-container relative flex-grow flex flex-col">
-      <div class="text-gray-400 text-sm font-body line-clamp-3 transition-all duration-300 description-content w-full whitespace-pre-wrap">
+      <div class="text-gray-400 text-sm font-body transition-all duration-300 description-content w-full whitespace-pre-wrap">
         {project.caseStudy?.overview || (Array.isArray(project.description) ? project.description.join('\n') : project.description)}
       </div>
-      <button 
-        class="read-more-btn mt-2 inline-block text-left text-accent text-xs font-bold hover:underline bg-transparent border-none cursor-pointer w-max"
-        aria-expanded="false"
-      >
-        Read more
-      </button>
     </div>
 
     <!-- Tech Stack -->
@@ -83,42 +78,6 @@ const { project } = Astro.props;
 </div>
 
 <script>
-  function initReadMore() {
-    const btns = document.querySelectorAll('.read-more-btn');
-    
-    btns.forEach(btn => {
-      if(btn.getAttribute('data-init')) return;
-      btn.setAttribute('data-init', 'true');
-
-      // We wrap height calculation in setTimeout so fonts load
-      setTimeout(() => {
-        const container = btn.previousElementSibling;
-        // Check if content is actually overflowing
-        if (container.scrollHeight <= container.clientHeight + 2) {
-          btn.style.display = 'none';
-        }
-      }, 200);
-
-      btn.addEventListener('click', (e) => {
-        const button = e.target;
-        const container = button.previousElementSibling;
-        if (container.classList.contains('line-clamp-3')) {
-          container.classList.remove('line-clamp-3');
-          button.textContent = 'Show less';
-          button.setAttribute('aria-expanded', 'true');
-        } else {
-          container.classList.add('line-clamp-3');
-          button.textContent = 'Read more';
-          button.setAttribute('aria-expanded', 'false');
-        }
-      });
-    });
-  }
-
-  // Ensure scripts run properly with normal and Astro loads
-  window.addEventListener('load', initReadMore);
-  document.addEventListener('astro:page-load', initReadMore);
-  document.addEventListener('astro:after-swap', initReadMore);
 </script>
 
 <style is:global>

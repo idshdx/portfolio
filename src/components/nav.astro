@@ -27,6 +27,11 @@ const navItems: NavItem[] = [
     href: "#projects",
     icon: `mdi:computer`,
   },
+  {
+    label: "Open Source",
+    href: "#open-source",
+    icon: "mdi:source-branch",
+  },
   // {
   //   label: "Education",
   //   href: "#contact",
@@ -116,9 +121,9 @@ const navItems: NavItem[] = [
       transparent 75%
     );
     border-color: #ffffff20;
-
     border-radius: 9999px;
     backdrop-filter: blur(10px);
+    width: fit-content !important;
   }
 
   nav a.active .nav-indicator {
@@ -230,7 +235,6 @@ const navItems: NavItem[] = [
 <script>
   //scroll morphing effect, changing width & border radius
   const nav = document.getElementById("main-nav");
-  const maxScroll = 1000;
   let lastScrollY = window.scrollY;
   let rafId: number | null = null;
 
@@ -239,20 +243,8 @@ const navItems: NavItem[] = [
 
     if (currentScrollY > 0) {
       nav?.classList.add("scrolling");
-
-      const scrollProgress = Math.min(window.scrollY / maxScroll, 1);
-      const easeProgress = 1 - Math.pow(1 - scrollProgress, 4);
-
-      const minWidth = 620;
-      const maxWidth = window.innerWidth * 0.8;
-      const currentWidth = maxWidth - (maxWidth - minWidth) * easeProgress;
-
-      if (window.innerWidth >= 768) {
-        nav?.style.setProperty("width", `${currentWidth}px`);
-      }
     } else {
       nav?.classList.remove("scrolling");
-      // nav?.style.setProperty("width", "80%");
     }
     if (window.innerWidth < 768) {
       // Small buffer (e.g. 10px) to prevent accidental hiding on "jittery" scrolls

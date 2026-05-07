@@ -1,61 +1,55 @@
 ---
-import ProjectCard from './project-card.astro';
-import { projects } from '../site-data';
-
-// Map projects and add some visual properties for the cards
-const projectsData = projects.map((p, index) => ({
-  ...p,
-  // We will assign a gradient based on the index to give some variety
-  gradientIndex: index % 5
-}));
+import OssCard from './oss-card.astro';
+import { ossProjects } from '../site-data';
 ---
 
-<section id="projects" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
+<section id="open-source" aria-label="Open Source Projects" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
   <!-- Background Glow -->
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
 
   <div class="container mx-auto relative z-10">
     <div class="mb-16 md:mb-20">
       <h2 class="text-3xl md:text-5xl font-heading font-bold text-white mb-4 flex items-center gap-4">
-        <span class="text-accent">/</span> Case Studies
+        <span class="text-accent">/</span> Open Source Projects
       </h2>
       <p class="text-gray-400 font-body text-base md:text-lg max-w-2xl leading-relaxed">
-        A selection of enterprise architectures, consulting engagements, and published applications.
-        Each case represents a unique challenge solved with resilient software engineering.
+        A collection of open-source tools, libraries, and experiments built in public.
+        Each project is freely available to use, fork, and contribute to.
       </p>
     </div>
 
-    <!-- Original 3-Column Grid Configuration -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-max items-stretch">
-      {projectsData.map((project, index) => (
-        <div class="project-wrapper">
-           <ProjectCard project={project} />
-        </div>
-      ))}
-    </div>
+    {ossProjects.length > 0 && (
+      <div role="list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-max items-stretch">
+        {ossProjects.map((project) => (
+          <div role="listitem">
+            <OssCard project={project} />
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
 <script>
-  const initProjectReveal = () => {
+  const initOssProjectReveal = () => {
     const cards = document.querySelectorAll('.project-card');
-    
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         // Only trigger if the card is 15% visible
         if (entry.isIntersecting) {
           const card = entry.target as HTMLElement;
           const index = Array.from(cards).indexOf(card);
-          
+
           // Stagger effect based on row position
           setTimeout(() => {
             card.classList.add('reveal');
           }, (index % 3) * 150);
-          
+
           observer.unobserve(card);
         }
       });
-    }, { 
+    }, {
       threshold: 0.15, // 15%
       rootMargin: '0px 0px -10px 0px' // Negative margin, it must be inside the view
     });
@@ -64,8 +58,8 @@ const projectsData = projects.map((p, index) => ({
   };
 
   // Run only after everything (images, styles) is loaded
-  window.addEventListener('load', initProjectReveal);
-  
+  window.addEventListener('load', initOssProjectReveal);
+
   // Support for Astro View Transitions
-  document.addEventListener('astro:after-swap', initProjectReveal);
+  document.addEventListener('astro:after-swap', initOssProjectReveal);
 </script>

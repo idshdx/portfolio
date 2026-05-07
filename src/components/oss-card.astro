@@ -1,0 +1,85 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { OssProject } from '../site-data';
+
+interface Props {
+  project: OssProject;
+}
+
+const { project } = Astro.props;
+const { title, slug, description, repoUrl, category, heroImage } = project;
+---
+
+<article class="project-card group relative flex flex-col h-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500">
+
+  <!-- Hero strip -->
+  <div class="h-32 w-full relative overflow-hidden flex-shrink-0">
+    {heroImage
+      ? (
+        <img
+          src={heroImage}
+          alt={`${title} hero`}
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 z-0"
+        />
+      )
+      : (
+        <div class="w-full h-full bg-gradient-to-br from-accent/20 via-background to-background" />
+      )
+    }
+
+    <!-- Accent overlay on hover -->
+    <div class="absolute inset-0 bg-accent/10 group-hover:bg-transparent transition-colors z-10 pointer-events-none" />
+  </div>
+
+  <!-- Card body -->
+  <div class="p-6 flex flex-col flex-grow space-y-4">
+
+    <!-- Category + Title + Repo link (mirrors project-card.astro layout) -->
+    <div class="flex justify-between items-start">
+      <div>
+        <span class="text-accent text-[10px] uppercase tracking-widest font-bold">{category}</span>
+        <h3 class="text-xl font-heading font-bold text-white mt-1">{title}</h3>
+      </div>
+      <a
+        href={repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`View repository for ${title}, opens in new tab`}
+        class="inline-flex items-center gap-1 text-white/40 hover:text-accent transition-colors flex-shrink-0 mt-1 text-xs font-bold"
+      >
+        <span>View</span>
+        <Icon name="mdi:open-in-new" class="w-4 h-4" />
+      </a>
+    </div>
+
+    <!-- Expandable description -->
+    <div class="description-container relative flex-grow flex flex-col">
+      <div class="text-gray-400 text-sm font-body transition-all duration-300 description-content w-full">
+        {description}
+      </div>
+    </div>
+
+    <!-- View Project CTA -->
+    <a
+      href={`/open-source/${slug}`}
+      class="inline-flex items-center gap-2 text-accent text-sm font-bold hover:gap-3 transition-all duration-300 group/cta mt-auto"
+    >
+      <span>View Project</span>
+      <Icon name="mdi:arrow-right" class="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" />
+    </a>
+
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+</style>
+
+<script>
+</script>

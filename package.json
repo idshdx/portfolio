@@ -6,7 +6,8 @@
     "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest --run"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
@@ -20,5 +21,9 @@
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "fast-check": "4.7.0",
+    "vitest": "4.1.5"
   }
 }

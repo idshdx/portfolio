@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import { projects } from "../../data";
-import type { Project } from "../../data";
+import { projects } from "../../site-data";
+import type { Project } from "../../site-data";
 
 export async function getStaticPaths() {
   const caseStudyProjects = projects.filter((p) => p.caseStudy);
@@ -68,15 +68,8 @@ const nextProject =
 
       <!-- Hero Content -->
       <div
-        class="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28"
+        class="relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28"
       >
-        <div class="cs-reveal">
-          <span
-            class="inline-block px-4 py-1.5 bg-accent/15 border border-accent/30 rounded-full text-accent text-xs font-bold uppercase tracking-widest mb-6"
-          >
-            {project.category} · Case Study
-          </span>
-        </div>
 
         <h1
           class="cs-reveal text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-tight mb-6"
@@ -451,6 +444,10 @@ const nextProject =
             <a href="/#projects" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:computer" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Case Studies
+            </a>
+            <a href="/#open-source" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+              <Icon name="mdi:source-branch" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+              Open Source
             </a>
             <a href="/#contact" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:message" class="w-4 h-4 group-hover:scale-110 transition-transform" />
