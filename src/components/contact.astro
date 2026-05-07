@@ -6,7 +6,8 @@ const socials = [
   { name: "GitHub", url: personalInfo.github, icon: "mdi:github" },
   { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
   { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
-  { name: "Signal", url: "#", icon: "mdi:signal" },
+  { name: "Signal", url: "#", icon: "simple-icons:signal" },
+  { name: "Website", url: personalInfo.website, icon: "mdi:web" },
 ].filter((s) => !!s.url);
 ---
 
@@ -25,7 +26,7 @@ const socials = [
       </div>
 
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center"
       >
         {
           socials.map((social) => (
@@ -41,7 +42,7 @@ const socials = [
               <h3 class="text-white font-bold mb-1">{social.name}</h3>
               <p class="text-gray-400 text-xs truncate px-2">
                 {social.name === "Signal"
-                  ? "shdx.01"
+                  ? personalInfo.signal
                   : social.url
                       .replace("https://", "")
                       .replace("mailto:", "")

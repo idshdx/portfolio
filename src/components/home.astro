@@ -32,6 +32,7 @@ const localData: ProfileData = {
     { name: "GitHub", url: personalInfo.github, icon: "mdi:github" },
     { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
     { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
+    { name: "Signal", url: "#", icon: "simple-icons:signal" },
     { name: "Website", url: personalInfo.website, icon: "mdi:web" },
   ].filter((s) => !!s.url),
 };
@@ -111,15 +112,6 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
       <div
         class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
       ></div>
-    </a>
-
-    <a
-      href="#contact"
-      class="group relative inline-flex items-center justify-center px-10 py-3 bg-white/5 border border-white/10 rounded-full text-white font-body transition-all duration-300
-             hover:border-accent/40 hover:bg-white/10
-             hover:scale-105"
-    >
-      <span class="tracking-wide text-sm md:text-base font-medium">Get in Touch</span>
     </a>
   </div>
 
