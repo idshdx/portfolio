@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { skills } from '../site-data';
+import { skills } from '../data/site/skills';
 
 interface Skill {
   name: string;
@@ -55,7 +55,7 @@ const localTechData: { categories: Category[] } = {
       ],
     },
     {
-      title: "DevSecOps & Testing",
+      title: "DevOps & Testing",
       icon: "mdi:shield-check",
       skills: [
         ...mapSkills(skills.automationBuildTools, "mdi:robot"),

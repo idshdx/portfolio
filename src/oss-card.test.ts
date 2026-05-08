@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import type { OssProject } from './site-data';
+import type { OssProject } from './data/site/types';
 
 // ─── renderOssCard helper ─────────────────────────────────────────────────────
 // Replicates the HTML generation logic of oss-card.astro as a pure function so

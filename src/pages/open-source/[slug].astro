@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import { ossProjects } from "../../site-data";
-import type { OssProject } from "../../site-data";
+import { ossProjects } from "../../data/site/oss";
+import type { OssProject } from "../../data/site/types";
 
 export async function getStaticPaths() {
   return ossProjects.map((project) => ({

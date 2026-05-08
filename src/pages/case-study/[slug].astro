@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import { projects } from "../../site-data";
-import type { Project } from "../../site-data";
+import { projects } from "../../data/site/projects";
+import type { Project } from "../../data/site/types";
 
 export async function getStaticPaths() {
   const caseStudyProjects = projects.filter((p) => p.caseStudy);
@@ -147,7 +147,7 @@ const nextProject =
             Category
           </p>
           <p class="text-white font-heading font-bold text-sm">
-            {project.category}
+            {project.category.join(", ")}
           </p>
         </div>
       </div>

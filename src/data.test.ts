@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { ossProjects } from './site-data';
-import type { OssProject } from './site-data';
+import { ossProjects } from './data/site/oss';
+import type { OssProject } from './data/site/types';
 
 describe('ossProjects data model', () => {
   // Requirements 1.4 — exactly 3 placeholder entries

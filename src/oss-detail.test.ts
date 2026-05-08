@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import type { OssProject } from './site-data';
+import type { OssProject } from './data/site/types';
 
 // ─── Pure helper: getStaticPathsFrom ─────────────────────────────────────────
 // Replicates the getStaticPaths logic from open-source/[slug].astro as a pure
