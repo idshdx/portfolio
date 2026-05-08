@@ -50,8 +50,7 @@ function renderOssProjects(projects: OssProject[]): string {
         <span class="text-accent">/</span> Open Source Projects
       </h2>
       <p class="text-gray-400 font-body text-base md:text-lg max-w-2xl leading-relaxed">
-        A collection of open-source tools, libraries, and experiments built in public.
-        Each project is freely available to use, fork, and contribute to.
+        A selected collection of free open-source tools, libraries built in public.
       </p>
     </div>
     ${cardGrid}

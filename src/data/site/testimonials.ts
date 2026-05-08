@@ -2,24 +2,24 @@ import type { Testimonial } from './types';
 
 export const testimonials: Testimonial[] = [
   {
-    name: "John Doe",
-    position: "Senior Software Engineer",
-    company: "Tech Corp",
-    content: "An exceptional engineer who consistently delivers high-quality code and shows great leadership skills. It was a pleasure working together on several complex projects.",
-    link: "https://linkedin.com/in/johndoe"
+    name: "James Morris",
+    position: "Managing Director",
+    company: "Textmimedia",
+    content: "His dedication and perseverance are truly outstanding. He brought a positive outlook to every challenge, especially when it came to hiring and managing our project team and resources, ensuring we always had the right talent to succeed.",
+    link: "https://www.linkedin.com/in/james-morris-textmimedia"
   },
   {
-    name: "Jane Smith",
-    position: "Product Manager",
-    company: "Innovate Solutions",
-    content: "Has a remarkable ability to translate complex requirements into elegant technical solutions. Highly recommended for any ambitious project.",
-    link: "https://linkedin.com/in/janesmith"
+    name: "Robert Nicoara",
+    position: "DevOps and Cloud Infrastructure",
+    company: "Proto Spark",
+    content: "A highly skilled professional in software development. His ability to architect and implement robust solutions while maintaining high standards of code quality and performance was instrumental to our technical progress.",
+    link: "https://www.linkedin.com/in/robertnicoara"
   },
   {
-    name: "Alex Johnson",
-    position: "CTO",
-    company: "Startup Hub",
-    content: "A versatile developer with a deep understanding of modern web technologies. Their contribution was pivotal to our product's success.",
-    link: "https://linkedin.com/in/alexjohnson"
+    name: "Gabriel Albina",
+    position: "Business Developer",
+    company: "Cloud Business Services",
+    content: "He has a unique talent for business development leveraging IT. His strategic approach to integrating technology into business workflows has significantly enhanced our operational efficiency and market positioning.",
+    link: "https://www.linkedin.com/in/gabrielalbina"
   }
 ];

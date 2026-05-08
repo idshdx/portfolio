@@ -1,96 +1,93 @@
 ---
-import { workExperience } from '../data/site/experience';
-
-const careerData = workExperience.map(item => ({
-  company: item.company,
-  role: item.position,
-  period: item.period,
-  description: item.summary || (item.achievements && item.achievements.join(', ')) || '',
-  skills: item.tools || []
-}));
+import { milestones } from '../data/site/milestones';
 ---
 
 <section id="career" class="py-20 px-4 md:px-0 max-w-6xl mx-auto overflow-hidden">
-  <div class="container mx-auto  reveal-content" style="animation-delay: 1000ms;">
+  <div class="container mx-auto reveal-content" style="animation-delay: 1000ms;">
     <div>
       <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-2 flex items-center gap-4">
-        <span class="text-accent">/</span> Timeline
+        <span class="text-accent">/</span> Career Milestones
       </h2>
       <p class="text-gray font-body text-sm max-w-lg pb-8">
-        10+ years shipping production software — from early-stage startups to enterprise contractors.
+        Key moments that shaped my journey — from a first computer to building a consulting business.
       </p>
     </div>
 
     <div class="relative">
-      {/* Vertical Line*/}
+      {/* Vertical Line */}
       <div class="absolute left-2 md:left-1/2 md:-translate-x-1/2 top-5 bottom-0 w-0.5 bg-linear-to-b from-accent via-white/10 to-transparent"></div>
 
+      {/* Mobile layout */}
       <div class="md:hidden space-y-8">
-        {careerData.map((item, index) => (
+        {milestones.map((item, index) => (
           <div class="relative pl-6">
-            {/* Dot for mobile view*/}
-            <div class="scroll-stat absolute left-0 top-1 z-10">
-                <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a] 
-                            ${index === 0 ? 'bg-accent shadow-[0_0_15px_#00ff41] animate-pulse' : 'bg-gray-600'}`}>
-                </div>
+            {/* Dot */}
+            <div class="scroll-stat absolute left-0 top-[14px] z-10">
+              <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a]
+                          ${index === 0 ? 'bg-accent shadow-[0_0_15px_#a476ff] animate-pulse' : 'bg-gray-600'}`}>
               </div>
-            
-            {/* cards for mobile view*/}
-            <div class="scroll-stat bg-white/5 border border-white/10 p-4 rounded-2xl">
-              <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.period}</span>
-              <h3 class="text-xl font-heading font-bold text-white mt-1">{item.role}</h3>
-              <p class="text-gray-400 text-sm mb-4">{item.company}</p>
-              <p class="text-gray-500 font-body text-sm leading-relaxed mb-4">{item.description}</p>
-              <div class="flex flex-wrap gap-2">
-                {item.skills.map(skill => (
-                  <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-gray-300">{skill}</span>
-                ))}
-              </div>
+            </div>
+
+            {/* Card */}
+            <div class="scroll-stat bg-white/5 border border-white/10 p-4 rounded-2xl text-left">
+              <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.year}</span>
+              <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
+              {item.photo && (
+                <img
+                  src={item.photo}
+                  alt={item.title}
+                  class="w-full h-auto rounded-xl mb-4 opacity-80"
+                />
+              )}
+              <p class="text-gray-400 font-body text-sm leading-relaxed">{item.description}</p>
             </div>
           </div>
         ))}
       </div>
 
+      {/* Desktop alternating layout */}
       <div class="hidden md:block space-y-4">
-        {careerData.map((item, index) => (
+        {milestones.map((item, index) => (
           <div class="relative grid grid-cols-2">
             {/* Center Dot */}
-              <div class="scroll-stat absolute left-1/2 -translate-x-1/2 top-1 z-10">
-                <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a] 
-                            ${index === 0 ? 'bg-accent shadow-[0_0_15px_#00ff41] animate-pulse' : 'bg-gray-600'}`}>
-                </div>
+            <div class="scroll-stat absolute left-1/2 -translate-x-1/2 top-[22px] z-10">
+              <div class={`w-4 h-4 rounded-full border-4 border-[#0a0a0a]
+                          ${index === 0 ? 'bg-accent shadow-[0_0_15px_#a476ff] animate-pulse' : 'bg-gray-600'}`}>
               </div>
+            </div>
 
-            {/* Left Side (even items) */}
+            {/* Left side (even items) */}
             <div class="md:px-6 md:py-0">
               {index % 2 === 0 ? (
-                <div class="scroll-stat bg-white/5 border border-white/10 p-6 rounded-2xl text-right hover:border-accent/30 transition-all group">
-                  <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.period}</span>
-                  <h3 class="text-xl font-heading font-bold text-white mt-1">{item.role}</h3>
-                  <p class="text-gray text-sm mb-4">{item.company}</p>
-                  <p class="text-gray-400 font-body text-sm leading-relaxed mb-4">{item.description}</p>
-                  <div class="flex flex-wrap gap-2 justify-end">
-                    {item.skills.map(skill => (
-                      <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-gray-300 group-hover:border-accent/20">{skill}</span>
-                    ))}
-                  </div>
+                <div class="scroll-stat bg-white/5 border border-white/10 p-6 rounded-2xl text-left hover:border-accent/30 transition-all group">
+                  <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.year}</span>
+                  <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
+                  {item.photo && (
+                    <img
+                      src={item.photo}
+                      alt={item.title}
+                      class="w-full h-auto rounded-xl mb-4 opacity-80"
+                    />
+                  )}
+                  <p class="text-gray-400 font-body text-sm leading-relaxed">{item.description}</p>
                 </div>
               ) : <div class="h-full pointer-events-none"></div>}
             </div>
 
-            {/* Right Side (odd items) */}
+            {/* Right side (odd items) */}
             <div class="md:px-6 md:py-0">
               {index % 2 !== 0 ? (
                 <div class="scroll-stat bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-accent/30 transition-all group">
-                  <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.period}</span>
-                  <h3 class="text-xl font-heading font-bold text-white mt-1">{item.role}</h3>
-                  <p class="text-gray text-sm mb-4">{item.company}</p>
-                  <p class="text-gray-400 font-body text-sm leading-relaxed mb-4">{item.description}</p>
-                  <div class="flex flex-wrap gap-2">
-                    {item.skills.map(skill => (
-                      <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-gray-300 group-hover:border-accent/20">{skill}</span>
-                    ))}
-                  </div>
+                  <span class="text-accent font-mono text-xs tracking-widest uppercase">{item.year}</span>
+                  <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
+                  {item.photo && (
+                    <img
+                      src={item.photo}
+                      alt={item.title}
+                      class="w-full h-auto rounded-xl mb-4 opacity-80"
+                    />
+                  )}
+                  <p class="text-gray-400 font-body text-sm leading-relaxed">{item.description}</p>
                 </div>
               ) : <div class="h-full pointer-events-none"></div>}
             </div>
@@ -103,7 +100,6 @@ const careerData = workExperience.map(item => ({
 
 
 <style>
-  /* Reveal whole section when website loads */
   .reveal-content {
     opacity: 0;
     transform: translateY(20px);
@@ -117,14 +113,12 @@ const careerData = workExperience.map(item => ({
     }
   }
 
-  /* Initial state of the card */
   .scroll-stat {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Revealed state while scrolling*/
   .scroll-stat.reveal {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -135,30 +129,26 @@ const careerData = workExperience.map(item => ({
 <script>
   function revealCards() {
     const cards = document.querySelectorAll('.scroll-stat');
-    
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Add a slight delay based on the card's position to create a wave effect
           const index = Array.from(cards).indexOf(entry.target);
           setTimeout(() => {
             entry.target.classList.add('reveal');
-          }, (index % 3) * 150); // Delay resets every row for a clean staggered look
-          
+          }, (index % 3) * 150);
+
           observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.15, // Trigger when 15% of the card is visible
-      rootMargin: '0px 0px -10px 0px' // Trigger slightly before it hits the viewport
+      threshold: 0.15,
+      rootMargin: '0px 0px -10px 0px'
     });
 
     cards.forEach(card => observer.observe(card));
   }
 
-  // Runs on initial load
   revealCards();
-  
-  // Necessary for Astro View Transitions if you use them
   document.addEventListener('astro:after-swap', revealCards);
 </script>
