@@ -4,6 +4,7 @@ import '../styles/global.css'
 import '@fontsource-variable/space-grotesk';
 // Supports weights 100-900
 import '@fontsource-variable/inter';
+import Nav from "../components/nav.astro";
 
 interface Props {
   title: string;
@@ -23,6 +24,7 @@ const { title, description = "Andrei Botez — fullstack engineer building secur
     <title>{title}</title>
   </head>
   <body class="bg-background relative min-h-screen overflow-x-hidden antialiased">
+    <Nav />
     <div 
       id="matrix-container" 
       class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"

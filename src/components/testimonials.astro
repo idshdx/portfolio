@@ -1,0 +1,53 @@
+---
+import { testimonials } from '../data/site/testimonials';
+---
+
+<section id="testimonials" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative border-t border-white/5">
+  <!-- Background Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="container mx-auto relative z-10">
+    <div class="mb-16 md:mb-20">
+      <h2 class="text-3xl md:text-5xl font-heading font-bold text-white mb-4 flex items-center gap-4">
+        <span class="text-accent">/</span> Testimonials
+      </h2>
+      <p class="text-gray-400 font-body text-base md:text-lg max-w-2xl leading-relaxed">
+        Kind words from colleagues and partners I've had the pleasure of working with.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {testimonials.map((testimonial) => (
+        <a 
+          href={testimonial.link} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="bg-white/5 border border-white/10 p-8 rounded-2xl flex flex-col gap-6 hover:border-accent/30 hover:bg-white/[0.07] transition-all duration-300 group cursor-pointer"
+        >
+          <div class="flex-1">
+            <svg class="w-8 h-8 text-accent/20 mb-4 group-hover:text-accent/40 transition-colors" fill="currentColor" viewBox="0 0 32 32">
+              <path d="M10 8c-4.418 0-8 3.582-8 8s3.582 8 8 8c.882 0 1.714-.144 2.49-.408C13.626 25.176 15.65 26 18 26c4.418 0 8-3.582 8-8s-3.582-8-8-8c-.882 0-1.714.144-2.49.408C14.374 8.824 12.35 8 10 8zm0 2c1.782 0 3.32.748 4.382 1.942.118.134.23.274.334.42.238.334.436.696.592 1.082.25.61.392 1.276.392 1.976 0 .7-.142 1.366-.392 1.976-.156.386-.354.748-.592 1.082-.104.146-.216.286-.334.42-1.062 1.194-2.6 1.942-4.382 1.942-3.314 0-6-2.686-6-6s2.686-6 6-6zm8 0c1.782 0 3.32.748 4.382 1.942.118.134.23.274.334.42.238.334.436.696.592 1.082.25.61.392 1.276.392 1.976 0 .7-.142 1.366-.392 1.976-.156.386-.354.748-.592 1.082-.104.146-.216.286-.334.42-1.062 1.194-2.6 1.942-4.382 1.942-3.314 0-6-2.686-6-6s2.686-6 6-6z" />
+            </svg>
+            <p class="text-gray-300 italic font-body leading-relaxed">
+              "{testimonial.content}"
+            </p>
+          </div>
+          
+          <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/5">
+            <div>
+              <h4 class="text-white font-bold font-heading group-hover:text-accent transition-colors">{testimonial.name}</h4>
+              <p class="text-gray-500 text-sm font-body">
+                {testimonial.position} <span class="text-accent/60">@</span> {testimonial.company}
+              </p>
+            </div>
+            <div class="text-accent/40 group-hover:text-accent transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

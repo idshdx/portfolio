@@ -61,6 +61,14 @@ export interface Interest {
   label: InterestLabel;
 }
 
+export interface Testimonial {
+  name: string;
+  position: string;
+  company: string;
+  content: string;
+  link: string;
+}
+
 export interface OssProject {
   title: string;
   slug: string;

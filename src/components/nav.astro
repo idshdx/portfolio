@@ -8,43 +8,48 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Home",
-    href: "#home",
+    label: "Intro",
+    href: "/#home",
     icon: `mdi:home`,
   },
   {
     label: "Skills",
-    href: "#skills",
+    href: "/#skills",
     icon: `mdi:code-tags`,
   },
   {
-    label: "Career",
-    href: "#career",
+    label: "Timeline",
+    href: "/#career",
     icon: `mdi:work`,
   },
   {
-    label: "Case Studies",
-    href: "#projects",
+    label: "Cases",
+    href: "/#projects",
     icon: `mdi:computer`,
   },
   {
-    label: "Open Source",
-    href: "#open-source",
+    label: "Projects",
+    href: "/#open-source",
     icon: "mdi:source-branch",
+  },
+  {
+    label: "Testimonials",
+    href: "/#testimonials",
+    icon: "mdi:format-quote-close",
   },
   // {
   //   label: "Education",
-  //   href: "#contact",
+  //   href: "/#contact",
   //   icon: `mdi:message`,
   // },
   {
     label: "About",
-    href: "#about",
+    href: "/#about",
     icon: `mdi:account-outline`,
   },
   {
     label: "Contact",
-    href: "#contact",
+    href: "/#contact",
     icon: `mdi:message`,
   },
 ];
@@ -54,15 +59,15 @@ const navItems: NavItem[] = [
   <nav
     id="main-nav"
     aria-label="Main Navigation"
-    class="fixed left-1/2 -translate-x-1/2 z-20 border-[1.2px] border-transparent transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
+    class="fixed left-1/2 -translate-x-1/2 z-20 border-[1.2px] border-transparent transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[95%] md:w-[80%]"
   >
     <div
-      class="container mx-auto flex justify-center items-center p-3 reveal-content"
+      class="flex justify-center items-center p-3 reveal-content"
       style="animation-delay: 700ms;"
     >
       <ul
         role="list"
-        class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-12 gap-1"
+        class="flex w-full justify-between md:justify-center md:gap-4 lg:gap-8 xl:gap-12 gap-1"
       >
         {
           navItems.map((item) => (
@@ -123,7 +128,8 @@ const navItems: NavItem[] = [
     border-color: #ffffff20;
     border-radius: 9999px;
     backdrop-filter: blur(10px);
-    width: fit-content !important;
+    width: max-content !important;
+    max-width: 95vw;
   }
 
   nav a.active .nav-indicator {
@@ -272,22 +278,34 @@ const navItems: NavItem[] = [
   );
 
   //smooth scrolling to a linked section
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  document.querySelectorAll('a[href*="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      e.preventDefault();
       const target = e.currentTarget as HTMLAnchorElement;
-      const targetId = target.getAttribute("href")?.substring(1) || "";
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-        });
-        // Move keyboard focus to the target section for accessibility
-        if (!targetElement.hasAttribute('tabindex')) {
-          targetElement.setAttribute('tabindex', '-1');
-          targetElement.style.outline = 'none';
+      const href = target.getAttribute("href") || "";
+      
+      // Only smooth scroll if we are on the same page
+      if (href.startsWith("/#") || href.startsWith("#")) {
+        const targetId = href.split("#")[1];
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+          });
+          // Move keyboard focus to the target section for accessibility
+          if (!targetElement.hasAttribute('tabindex')) {
+            targetElement.setAttribute('tabindex', '-1');
+            targetElement.style.outline = 'none';
+          }
+          targetElement.focus({ preventScroll: true });
+          
+          // If we are on mobile, hide the nav after clicking
+          if (window.innerWidth < 768) {
+             const nav = document.getElementById("main-nav");
+             nav?.classList.add("nav-hidden");
+          }
         }
-        targetElement.focus({ preventScroll: true });
       }
     });
   });
@@ -295,7 +313,7 @@ const navItems: NavItem[] = [
   //highlight section by observing visible one on the screen by 50%
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll("nav a[href^='#']");
+    const navLinks = document.querySelectorAll("nav a[href*='#']");
     const observerOptions = { threshold: 0.5 };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -303,7 +321,7 @@ const navItems: NavItem[] = [
         if (entry.isIntersecting) {
           navLinks.forEach((link) => link.classList.remove("active"));
           const id = entry.target.getAttribute("id");
-          const activeLink = document.querySelector(`nav a[href="#${id}"]`);
+          const activeLink = document.querySelector(`nav a[href*="#${id}"]`);
           if (activeLink) {
             activeLink.classList.add("active");
           }
