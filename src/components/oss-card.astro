@@ -65,6 +65,7 @@ const { title, slug, description, repoUrl, category, heroImage } = project;
     <a
       href={`/open-source/${slug}`}
       class="inline-flex items-center gap-2 text-accent text-sm font-bold hover:gap-3 transition-all duration-300 group/cta mt-auto"
+      aria-label={`View details for open source project ${title}`}
     >
       <span>View Project</span>
       <Icon name="mdi:arrow-right" class="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" />

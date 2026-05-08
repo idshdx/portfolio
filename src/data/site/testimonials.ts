@@ -10,16 +10,16 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Robert Nicoara",
-    position: "DevOps and Cloud Infrastructure",
+    position: "DevOps & Cloud Engineer",
     company: "Proto Spark",
-    content: "A highly skilled professional in software development. His ability to architect and implement robust solutions while maintaining high standards of code quality and performance was instrumental to our technical progress.",
+    content: "Andrei is a highly skilled professional in software development. His ability to architect and implement robust solutions while maintaining high standards of code quality and performance was instrumental to the projects's technical progress.",
     link: "https://www.linkedin.com/in/robertnicoara"
   },
   {
     name: "Gabriel Albina",
     position: "Business Developer",
-    company: "Cloud Business Services",
-    content: "He has a unique talent for business development leveraging IT. His strategic approach to integrating technology into business workflows has significantly enhanced our operational efficiency and market positioning.",
+    company: "CBS",
+    content: "He has a unique talent for business development leveraging IT advancements. The strategic approach to integrating technology into business workflows has significantly enhanced our operational efficiency and market positioning.",
     link: "https://www.linkedin.com/in/gabrielalbina"
   }
 ];
