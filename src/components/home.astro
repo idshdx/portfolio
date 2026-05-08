@@ -32,7 +32,7 @@ const localData: ProfileData = {
     { name: "GitHub", url: personalInfo.github, icon: "mdi:github" },
     { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
     { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
-    { name: "Signal", url: "#", icon: "simple-icons:signal" },
+    { name: "Signal", url: `sgnl://signal.me/#u/${personalInfo.signal}`, icon: "simple-icons:signal" },
     { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
     { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
   ].filter((s) => !!s.url),
@@ -121,10 +121,11 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
       socials.map((social) => (
         <a
           href={social.url}
-          target="_blank"
+          target={social.name === "Signal" ? "_self" : "_blank"}
           rel="noopener noreferrer"
           aria-label={social.name}
-          class="group relative flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
+          data-copy={social.name === "Signal" ? personalInfo.signal : null}
+          class="group relative flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 contact-card"
         >
           <Icon
             name={social.icon}
@@ -189,38 +190,64 @@ const { name, photoUrl, intro, introHtml, resumeUrl, socials } = data;
 </style>
 
 <script>
-  function revealSkills() {
-    const cards = document.querySelectorAll(".skill-card");
+  function initHome() {
+    function revealSkills() {
+      const cards = document.querySelectorAll(".skill-card");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Add a slight delay based on the card's position to create a wave effect
-            const index = Array.from(cards).indexOf(entry.target);
-            setTimeout(
-              () => {
-                entry.target.classList.add("reveal");
-              },
-              (index % 6) * 50,
-            ); // Delay resets every row for a clean staggered look
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Add a slight delay based on the card's position to create a wave effect
+              const index = Array.from(cards).indexOf(entry.target);
+              setTimeout(
+                () => {
+                  entry.target.classList.add("reveal");
+                },
+                (index % 6) * 50,
+              ); // Delay resets every row for a clean staggered look
 
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the card is visible
-        rootMargin: "0px 0px -50px 0px", // Trigger slightly before it hits the viewport
-      },
-    );
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1, // Trigger when 10% of the card is visible
+          rootMargin: "0px 0px -50px 0px", // Trigger slightly before it hits the viewport
+        },
+      );
 
-    cards.forEach((card) => observer.observe(card));
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    // Copy functionality
+    const cards = document.querySelectorAll('.contact-card[data-copy]');
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const text = card.getAttribute('data-copy');
+        if (text) {
+          navigator.clipboard.writeText(text).then(() => {
+            const span = card.querySelector('span[aria-hidden="true"]');
+            if (span) {
+              const original = span.textContent;
+              span.textContent = 'ID Copied!';
+              span.classList.add('text-accent');
+              
+              setTimeout(() => {
+                span.textContent = original;
+                span.classList.remove('text-accent');
+              }, 2000);
+            }
+          });
+        }
+      });
+    });
+
+    revealSkills();
   }
 
-  // Runs on initial load
-  revealSkills();
-
-  // Necessary for Astro View Transitions if you use them
-  document.addEventListener("astro:after-swap", revealSkills);
+  // Support for Astro View Transitions
+  document.addEventListener('astro:page-load', initHome);
+  // Initial load
+  initHome();
 </script>

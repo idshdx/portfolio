@@ -23,15 +23,15 @@ function indexOf(source: string, needle: string): number {
 
 describe('nav.astro — navItems integration', () => {
   // Requirements 4.1 — Open Source nav entry exists
-  it('contains an entry with href="#open-source"', () => {
-    expect(navSource).toContain('href: "#open-source"');
+  it('contains an entry with href="/#open-source"', () => {
+    expect(navSource).toContain('href: "/#open-source"');
   });
 
   // Requirements 4.2 — Open Source nav entry uses mdi:source-branch icon
   it('uses "mdi:source-branch" as the icon for the Open Source entry', () => {
-    // Find the block that contains href: "#open-source" and verify the icon
+    // Find the block that contains href: "/#open-source" and verify the icon
     // appears in close proximity (within the same object literal).
-    const hrefIndex = navSource.indexOf('href: "#open-source"');
+    const hrefIndex = navSource.indexOf('href: "/#open-source"');
     expect(hrefIndex).toBeGreaterThan(-1);
 
     // Grab a window of text around the href to check the icon field.
@@ -44,9 +44,9 @@ describe('nav.astro — navItems integration', () => {
   });
 
   // Requirements 4.1 — Open Source entry is positioned after the #projects entry
-  it('href="#open-source" appears after href="#projects" in the navItems array', () => {
-    const projectsIndex = indexOf(navSource, 'href: "#projects"');
-    const openSourceIndex = indexOf(navSource, 'href: "#open-source"');
+  it('href="/#open-source" appears after href="/#projects" in the navItems array', () => {
+    const projectsIndex = indexOf(navSource, 'href: "/#projects"');
+    const openSourceIndex = indexOf(navSource, 'href: "/#open-source"');
 
     expect(projectsIndex).toBeGreaterThan(-1);
     expect(openSourceIndex).toBeGreaterThan(-1);

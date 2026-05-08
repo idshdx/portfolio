@@ -6,7 +6,7 @@ const socials = [
   { name: "GitHub", url: personalInfo.github, icon: "mdi:github" },
   { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
   { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
-  { name: "Signal", url: "#", icon: "simple-icons:signal" },
+  { name: "Signal", url: `sgnl://signal.me/#u/${personalInfo.signal}`, icon: "simple-icons:signal" },
   { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
   { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
 ].filter((s) => !!s.url);
@@ -33,15 +33,16 @@ const socials = [
           socials.map((social) => (
             <a
               href={social.url}
-              target="_blank"
-              class="group p-8 bg-white/5 border border-white/10 rounded-3xl hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
+              target={social.name === "Signal" ? "_self" : "_blank"}
+              data-copy={social.name === "Signal" ? personalInfo.signal : null}
+              class="contact-card group p-8 bg-white/5 border border-white/10 rounded-3xl hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
             >
               <Icon
                 name={social.icon}
                 class="w-10 h-10 text-accent mb-4 mx-auto group-hover:scale-110 transition-transform"
               />
               <h3 class="text-white font-bold mb-1">{social.name}</h3>
-              <p class="text-gray-400 text-xs truncate px-2">
+              <p class="text-gray-400 text-xs truncate px-2 transition-colors">
                 {social.name === "Signal"
                   ? personalInfo.signal
                   : social.name === "PGP"
@@ -81,10 +82,6 @@ const socials = [
                 />
                 <span>Astro</span>
               </a>
-              <!-- <span class="text-gray-500">|</span>
-              <a href="https://fastapi.tiangolo.com" target="_blank" class="hover:text-accent transition-colors flex items-center gap-1.5 group">
-                <Icon name="skill-icons:fastapi" class="w-4 h-4 group-hover:drop-shadow-[0_0_5px_var(--color-accent)]" />
-                <span>FastAPI</span> -->
             </div>
           </div>
         </div>
@@ -92,6 +89,56 @@ const socials = [
     </div>
   </div>
 </section>
+
+<script>
+  function initContact() {
+    // Reveal animation
+    const revealContact = () => {
+      const section = document.querySelector(".contact-reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("reveal");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      if (section) observer.observe(section);
+    };
+
+    // Copy functionality
+    const cards = document.querySelectorAll('.contact-card[data-copy]');
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const text = card.getAttribute('data-copy');
+        if (text) {
+          navigator.clipboard.writeText(text).then(() => {
+            const p = card.querySelector('p');
+            if (p) {
+              const original = p.textContent;
+              p.textContent = 'ID Copied!';
+              p.classList.add('text-accent');
+              p.classList.remove('text-gray-400');
+              
+              setTimeout(() => {
+                p.textContent = original;
+                p.classList.remove('text-accent');
+                p.classList.add('text-gray-400');
+              }, 2000);
+            }
+          });
+        }
+      });
+    });
+
+    revealContact();
+  }
+
+  // Support for Astro View Transitions
+  document.addEventListener('astro:page-load', initContact);
+  // Initial load
+  initContact();
+</script>
 
 <style>
   .contact-reveal {
@@ -103,20 +150,3 @@ const socials = [
     transform: translateY(0);
   }
 </style>
-
-<script>
-  const revealContact = () => {
-    const section = document.querySelector(".contact-reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("reveal");
-        });
-      },
-      { threshold: 0.1 },
-    );
-    if (section) observer.observe(section);
-  };
-  revealContact();
-  document.addEventListener("astro:after-swap", revealContact);
-</script>
