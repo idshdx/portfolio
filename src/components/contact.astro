@@ -7,7 +7,8 @@ const socials = [
   { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
   { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
   { name: "Signal", url: "#", icon: "simple-icons:signal" },
-  { name: "Website", url: personalInfo.website, icon: "mdi:web" },
+  { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
+  { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
 ].filter((s) => !!s.url);
 ---
 
@@ -26,7 +27,7 @@ const socials = [
       </div>
 
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"
       >
         {
           socials.map((social) => (
@@ -43,10 +44,12 @@ const socials = [
               <p class="text-gray-400 text-xs truncate px-2">
                 {social.name === "Signal"
                   ? personalInfo.signal
-                  : social.url
-                      .replace("https://", "")
-                      .replace("mailto:", "")
-                      .replace("wa.me/", "+")}
+                  : social.name === "PGP"
+                    ? personalInfo.pgp_fingerprint
+                    : social.url
+                        .replace("https://", "")
+                        .replace("mailto:", "")
+                        .replace("wa.me/", "+")}
               </p>
             </a>
           ))

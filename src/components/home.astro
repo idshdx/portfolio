@@ -33,7 +33,8 @@ const localData: ProfileData = {
     { name: "LinkedIn", url: personalInfo.linkedin, icon: "mdi:linkedin" },
     { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
     { name: "Signal", url: "#", icon: "simple-icons:signal" },
-    { name: "Website", url: personalInfo.website, icon: "mdi:web" },
+    { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
+    { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
   ].filter((s) => !!s.url),
 };
 
