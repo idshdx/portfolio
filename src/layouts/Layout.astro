@@ -9,9 +9,14 @@ import Nav from "../components/nav.astro";
 interface Props {
   title: string;
   description?: string;
+  showNav?: boolean;
 }
 
-const { title, description = "Andrei Botez — fullstack engineer building secure, privacy-first software. 10+ years shipping production systems across enterprise, startup, and open-source." } = Astro.props;
+const { 
+  title, 
+  description = "Andrei Botez — fullstack engineer building secure, privacy-first software. 10+ years shipping production systems across enterprise, startup, and open-source.",
+  showNav = true 
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -24,7 +29,7 @@ const { title, description = "Andrei Botez — fullstack engineer building secur
     <title>{title}</title>
   </head>
   <body class="bg-background relative min-h-screen overflow-x-hidden antialiased">
-    <Nav />
+    {showNav && <Nav />}
     <div 
       id="matrix-container" 
       class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"

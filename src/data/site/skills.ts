@@ -106,7 +106,7 @@ export const skills = {
     "DevSecOps",
     "Project and Team Leadership",
     "Free Open Source Software Consulting",
-    "Privacy Enhancing Technologies",
+    "Privacy Enhancing Technologies R&D",
     "Systems administration",
     "Leveraging IT for business growth",
   ],
