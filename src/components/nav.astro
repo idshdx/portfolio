@@ -310,30 +310,69 @@ const navItems: NavItem[] = [
     });
   });
 
-  //highlight section by observing visible one on the screen by 50%
+  //highlight section by observing visible one on the screen
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section[id]");
     const navLinks = document.querySelectorAll("nav a[href*='#']");
-    const observerOptions = { threshold: 0.5 };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navLinks.forEach((link) => link.classList.remove("active"));
-          const id = entry.target.getAttribute("id");
-          const activeLink = document.querySelector(`nav a[href*="#${id}"]`);
-          if (activeLink) {
-            activeLink.classList.add("active");
-          }
-        }
-      });
+    
+    // Wider rootMargin and multiple thresholds for better coverage
+    const observerOptions = { 
+      threshold: [0, 0.1, 0.2, 0.3, 0.5],
+      rootMargin: "-20% 0px -30% 0px" 
     };
 
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
-    );
-    sections.forEach((section) => observer.observe(section));
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      // We want to find the section that is most "active" in our target zone
+      let activeId = "";
+
+      // Check if we are at the very top of the page
+      if (window.scrollY < 100) {
+        activeId = "home";
+      } 
+      // Check if we are at the very bottom of the page
+      else if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 50) {
+        activeId = "contact";
+      }
+      else {
+        // Find the section currently intersecting
+        const intersecting = Array.from(sections).filter(section => {
+          const rect = section.getBoundingClientRect();
+          // A section is "active" if its top is in the top half of the screen
+          // or if it covers the top half.
+          return rect.top < window.innerHeight * 0.4 && rect.bottom > window.innerHeight * 0.2;
+        });
+
+        if (intersecting.length > 0) {
+          // Pick the one that is closest to the top of our "active zone"
+          intersecting.sort((a, b) => {
+            const rectA = a.getBoundingClientRect();
+            const rectB = b.getBoundingClientRect();
+            return Math.abs(rectA.top) - Math.abs(rectB.top);
+          });
+          activeId = intersecting[0].getAttribute("id") || "";
+        }
+      }
+
+      if (activeId) {
+        navLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          if (href?.includes(`#${activeId}`)) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      }
+    };
+
+    // Use scroll event as fallback/supplement for more immediate feedback
+    window.addEventListener("scroll", () => {
+      // Throttled check could be added here, but let's try direct first
+      observerCallback([]); 
+    }, { passive: true });
+
+    // Initial check
+    observerCallback([]);
   });
 </script>
 
