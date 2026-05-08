@@ -127,9 +127,6 @@ const { project } = Astro.props;
 
 <style is:global>
   .project-card {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(40px);
     transition: 
       opacity 0.8s ease-out, 
       transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
@@ -137,7 +134,13 @@ const { project } = Astro.props;
     will-change: transform, opacity;
   }
 
-  .project-card.reveal {
+  .js .project-card {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px);
+  }
+
+  .js .project-card.reveal {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;

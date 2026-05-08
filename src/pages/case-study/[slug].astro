@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import { projects } from "../../data/site/projects";
+import { personalInfo } from "../../data/site/personal";
 import type { Project } from "../../data/site/types";
 
 export async function getStaticPaths() {
@@ -456,7 +457,7 @@ const nextProject =
           </nav>
 
           <p class="text-center text-gray-600 text-xs mt-8 font-body">
-            Andrei Botez &copy; {new Date().getFullYear()}
+            {personalInfo.name} &copy; {new Date().getFullYear()}
           </p>
         </div>
       </div>
@@ -467,14 +468,17 @@ const nextProject =
 <style>
   /* Scroll-triggered reveal animations */
   .cs-reveal {
-    opacity: 0;
-    transform: translateY(30px);
     transition:
       opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .cs-reveal.visible {
+  :global(.js) .cs-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  :global(.js) .cs-reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }

@@ -14,7 +14,7 @@ const socials = [
 
 <section id="contact" class="py-4 md:py-20 px-4 md:px-0">
   <div class="container mx-auto">
-    <div class="contact-reveal opacity-0 space-y-12">
+    <div class="contact-reveal space-y-12">
       <div class="mb-16">
         <h2
           class="text-3xl md:text-4xl font-heading font-bold text-white mb-2 flex items-center gap-4"
@@ -58,32 +58,14 @@ const socials = [
       </div>
 
       <!-- /* FOOTER */ -->
-      <div class="pt-20 border-t border-white/5">
-        <div
-          class="flex flex-col md:flex-row justify-between items-center gap-4"
-        >
-          <p class="text-gray-400 text-sm font-body order-2 md:order-1">
-            {personalInfo.name} © 2026
+      <div class="pt-16 border-t border-white/10">
+        <div class="flex flex-col items-center gap-3 text-center">
+          <p class="text-gray-500 text-xs font-body w-full leading-relaxed">
+            The opinions expressed on this website are my own and do not necessarily reflect the views of my current or past employers.
           </p>
-
-          <div
-            class="flex items-center gap-3 text-gray-400 text-xs font-body order-1 md:order-2"
-          >
-            <span>Built with</span>
-            <div class="flex gap-4">
-              <a
-                href="https://astro.build"
-                target="_blank"
-                class="hover:text-accent transition-colors flex items-center gap-1.5 group"
-              >
-                <Icon
-                  name="skill-icons:astro"
-                  class="w-4 h-4 group-hover:drop-shadow-[0_0_5px_var(--color-accent)]"
-                />
-                <span>Astro</span>
-              </a>
-            </div>
-          </div>
+          <p class="text-gray-600 text-xs font-body">
+            {personalInfo.name} &copy; {new Date().getFullYear()}
+          </p>
         </div>
       </div>
     </div>
@@ -142,10 +124,15 @@ const socials = [
 
 <style>
   .contact-reveal {
-    transform: translateY(30px);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .contact-reveal.reveal {
+
+  :global(.js) .contact-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  :global(.js) .contact-reveal.reveal {
     opacity: 1 !important;
     transform: translateY(0);
   }
