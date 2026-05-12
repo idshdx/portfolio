@@ -1,93 +1,199 @@
-# CareerPortfolio: Data-Driven Astro SSG
+# CareerPortfolio — Andrei Botez
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
+[![Astro](https://img.shields.io/badge/Astro_v6-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![CI/CD](https://img.shields.io/badge/GitHub_Actions-Deploy-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-A high-performance, responsive portfolio built with **Astro**, **Tailwind CSS**, and **Native Browser Animations**. Designed to be 100% data-driven and easy to customize as a reusable template.
+A high-performance, fully responsive personal portfolio and career site built with **Astro v6**, **Tailwind CSS v4**, and **TypeScript**. Content is managed entirely through data files — no component code changes required to update portfolio information.
+
+> **Origin:** This project was inspired by and initially based on work by [Nabil Akhunjee](https://github.com/nakhunjee). It has since been significantly extended with new features, sections, and content.
+
+---
 
 ## 🌟 Highlights
-- **Zero-JS by Default:** Leveraging Astro's islands architecture.
-- **JSON-First:** Update your information in `src/data/` without touching any code.
+
+- **Zero-JS by Default:** Leveraging Astro's islands architecture for maximum performance.
+- **Data-Driven:** All content lives in `src/data/` — edit JSON/TypeScript files to update the site.
 - **Fully Responsive:** Optimized for mobile, tablet, and desktop.
-- **Performance:** Optimized for perfect Lighthouse scores.
 - **SEO Ready:** Open Graph, Twitter cards, canonical URLs, sitemap, and robots.txt included.
+- **Performance:** Optimized for perfect Lighthouse scores.
+- **CI/CD Included:** GitHub Actions workflow runs tests and deploys to GitHub Pages on every push to `main`.
+- **Property-Based Testing:** Vitest with fast-check for robust data validation.
+
+---
 
 ## 🛠️ Tech Stack
-- **Frontend:** [Astro](https://astro.build/) (Static Site Generation)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Icons:** [Iconify](https://iconify.design/) via `astro-icon`
-- **Testing:** [Vitest](https://vitest.dev/) with [fast-check](https://fast-check.dev/) for property-based testing
-- **Deployment:** [GitHub Pages](https://pages.github.com/) (GitHub Actions workflow included)
 
-## 🚀 Getting Started
-Follow these instructions to get a local copy up and running.
+| Layer | Technology |
+| :---- | :--------- |
+| Framework | [Astro v6](https://astro.build/) (Static Site Generation) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com/) via `@tailwindcss/vite` |
+| Icons | [Iconify](https://iconify.design/) via `astro-icon` (MDI, Simple Icons, Skill Icons, VSCode Icons) |
+| Fonts | Inter Variable, Space Grotesk Variable via `@fontsource-variable` |
+| Testing | [Vitest v4](https://vitest.dev/) + [fast-check](https://fast-check.dev/) for property-based tests |
+| Sitemap | `@astrojs/sitemap` |
+| Deployment | [GitHub Pages](https://pages.github.com/) via GitHub Actions |
 
-### Prerequisites
-Make sure you have **Node.js** (v22.12.0 or higher) installed on your machine.
+---
 
-### Installation
-1. Click **Use this template** on this repository.
-2. Choose **Create a new repository**.
-3. Clone your new repository: `git clone <your-repo-url>`
-4. Navigate to your repo: `cd <your-repo-name>`
-5. Install dependencies: `npm install`
-6. Start development server: `npm run dev`
-7. Update your content in `src/data/`
-8. Build and deploy on your preferred platform
-
-## 🛠️ How to Customize
-To make this portfolio yours, simply edit the data files in `src/data/` and `src/data/site/`.
+## 📁 Project Structure
 
 ```
-Directory Structure
-├── public/              # Static assets (images, favicon, robots.txt)
+├── public/              # Static assets (images, favicon, robots.txt, CV files)
 ├── src/
 │   ├── components/      # Reusable Astro components
-│   ├── data/            # Portfolio content (JSON + TypeScript modules)
-│   │   └── site/        # TypeScript data modules (personal, projects, skills, etc.)
-│   ├── layouts/         # Layout templates with Meta tags
-│   ├── pages/           # Site routes (index.astro, dynamic [slug] routes)
-│   └── styles/          # Global CSS (Tailwind)
-│   ├── *.test.ts        # Test files (colocated with source in src/)
-├── astro.config.mjs     # Astro configuration
-├── vitest.config.ts     # Vitest test configuration
+│   │   ├── career.astro
+│   │   ├── companies.astro
+│   │   ├── contact.astro
+│   │   ├── home.astro
+│   │   ├── interests.astro
+│   │   ├── nav.astro
+│   │   ├── oss-card.astro
+│   │   ├── oss-projects.astro
+│   │   ├── project-card.astro
+│   │   ├── projects.astro
+│   │   ├── tech.astro
+│   │   └── testimonials.astro
+│   ├── data/            # All portfolio content
+│   │   ├── site/        # TypeScript data modules
+│   │   │   ├── types.ts         # Shared TypeScript interfaces
+│   │   │   ├── personal.ts      # Name, email, social links
+│   │   │   ├── experience.ts    # Work history
+│   │   │   ├── education.ts     # Education background
+│   │   │   ├── projects.ts      # Projects with optional case studies
+│   │   │   ├── oss.ts           # Open-source projects with detail pages
+│   │   │   ├── skills.ts        # Technical skills by category
+│   │   │   ├── interests.ts     # Personal/professional interests
+│   │   │   ├── testimonials.ts  # Testimonials/references
+│   │   │   ├── milestones.ts    # Career milestones
+│   │   │   └── index.ts         # Re-exports
+│   │   └── *.json               # Legacy JSON data files
+│   ├── layouts/         # Layout templates (Layout.astro with full meta tags)
+│   ├── pages/           # Site routes
+│   │   ├── index.astro              # Main portfolio page
+│   │   ├── case-study/[slug].astro  # Dynamic case study detail pages
+│   │   └── open-source/[slug].astro # Dynamic OSS project detail pages
+│   ├── styles/          # Global CSS (Tailwind)
+│   └── *.test.ts        # Vitest tests (colocated with source)
+├── .github/workflows/
+│   └── deploy.yml       # CI/CD: test → build → deploy to GitHub Pages
+├── astro.config.mjs     # Astro configuration (site URL, integrations)
+├── vitest.config.ts     # Vitest configuration
 └── tsconfig.json        # TypeScript configuration
 ```
 
-### Key Configuration
-Before deploying, update these values:
+---
 
-1. **`astro.config.mjs`** — Set your `site` URL (e.g., `https://<username>.github.io`)
-2. **`src/data/site/personal.ts`** — Your name, email, links, and social profiles
-3. **`src/layouts/Layout.astro`** — Default meta description
-4. **`public/robots.txt`** — Update the sitemap URL to match your domain
+## 📄 Site Sections
 
-### Useful Commands
+| Section | Description |
+| :------ | :---------- |
+| **Home** | Hero intro with name, tagline, and primary CTAs |
+| **Projects** | Professional projects with tech stack; links to case study detail pages |
+| **Case Studies** | In-depth writeups: challenge, approach, results, and tech deep-dives |
+| **Open Source** | OSS contributions with detail pages (features, usage, install steps) |
+| **Tech** | Skills grouped by category (languages, frameworks, tools, cloud, etc.) |
+| **Career** | Work experience timeline and education |
+| **Interests** | Personal and professional interests with activity labels |
+| **Testimonials** | Recommendations from colleagues and clients |
+| **Contact** | Contact links (email, LinkedIn, GitHub, Signal, PGP key) |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`       |
-| `npm run build`           | Build your production site to `./dist/`           |
-| `npm run preview`         | Preview your build locally, before deploying      |
-| `npm run test`            | Run tests with Vitest                             |
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+**Node.js v22.12.0 or higher** is required.
+
+### Local Development
+
+```bash
+git clone <repo-url>
+cd career-portfolio-template
+npm install
+npm run dev        # Starts dev server at http://localhost:4321
+```
+
+### Commands
+
+| Command | Action |
+| :------ | :----- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start local dev server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run test` | Run all tests with Vitest |
+
+---
+
+## ✏️ Customizing Content
+
+All portfolio content is managed through data files in `src/data/site/`. No component edits required.
+
+### Key Files to Edit
+
+| File | What it controls |
+| :--- | :--------------- |
+| `src/data/site/personal.ts` | Name, email, GitHub, LinkedIn, website, Signal, PGP |
+| `src/data/site/experience.ts` | Work history entries |
+| `src/data/site/education.ts` | Education entries |
+| `src/data/site/projects.ts` | Projects and embedded case studies |
+| `src/data/site/oss.ts` | Open-source projects with full detail pages |
+| `src/data/site/skills.ts` | Tech skills by category |
+| `src/data/site/interests.ts` | Interests with `Exploring / Active / Core / Old` labels |
+| `src/data/site/testimonials.ts` | Testimonials/references |
+| `src/data/site/milestones.ts` | Career milestones |
+| `astro.config.mjs` | Site URL (required for sitemap and canonical URLs) |
+
+### Before Deploying
+
+1. **`astro.config.mjs`** — Set your `site` URL:
+   ```js
+   site: 'https://<username>.github.io',
+   // base: '/<repo-name>',  // Uncomment if deploying to a subpath
+   ```
+2. **`src/data/site/personal.ts`** — Fill in your personal details.
+3. **`public/robots.txt`** — Update the sitemap URL to match your domain.
+4. **`src/layouts/Layout.astro`** — Review the default meta description.
+
+---
 
 ## 🚀 Deployment (GitHub Pages)
 
-This project includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys the site on every push to `main`.
+The included GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
+1. Runs all Vitest tests
+2. Builds the Astro site
+3. Deploys to GitHub Pages
 
-### Setup
-1. In your GitHub repository, go to **Settings → Pages**.
-2. Under **Source**, select **GitHub Actions**.
-3. Update `site` in `astro.config.mjs` with your GitHub Pages URL:
-   ```js
-   site: 'https://<username>.github.io',
-   ```
-4. If deploying to a subpath (e.g., `https://<username>.github.io/repo-name`), also set:
-   ```js
-   base: '/repo-name',
-   ```
+### Setup Steps
+
+1. Push the repository to GitHub.
+2. Go to **Settings → Pages** in your repository.
+3. Under **Source**, select **GitHub Actions**.
+4. Update `site` in `astro.config.mjs` with your GitHub Pages URL.
 5. Push to `main` — the workflow will build and deploy automatically.
 
+---
+
+## 🧪 Testing
+
+Tests are colocated with source files in `src/` and use Vitest with fast-check for property-based assertions on data integrity.
+
+```bash
+npm run test
+```
+
+Tests cover:
+- Data shape and required field validation (personal info, projects, OSS entries)
+- Navigation structure
+- OSS card and detail page data integrity
+
+---
+
 ## 📝 License
-[MIT License](LICENSE)
+
+[MIT License](LICENSE) — Copyright © 2026 Andrei Botez.
+
+Based on an original work by [Nabil Akhunjee](https://github.com/nakhunjee), which served as the initial inspiration and foundation for this project.

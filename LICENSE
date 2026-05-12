@@ -1,6 +1,9 @@
 MIT License
 
-Copyright (c) 2026 Nabil Akhunjee
+Copyright (c) 2026 Andrei Botez
+
+Based on an original work by Nabil Akhunjee (Copyright (c) 2026 Nabil Akhunjee),
+which served as the initial inspiration and foundation for this project.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
