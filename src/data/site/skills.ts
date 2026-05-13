@@ -99,15 +99,14 @@ export const skills = {
   domainSkills: [
     "Fullstack Web Development",
     "Legacy Software Migration",
-    "Client-oriented Software on-demand",
+    "Client-oriented software on-demand",
     "Systems Solution Technical Design and Writing",
     "API Development and Integration",
     "Database Design and Implementation",
     "DevSecOps",
     "Project and Team Leadership",
     "Free Open Source Software Consulting",
-    "Privacy Enhancing Technologies R&D",
-    "Systems administration",
+    "Privacy Enhancing Technologies",
     "Leveraging IT for business growth",
   ],
 };
