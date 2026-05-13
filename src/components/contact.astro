@@ -8,7 +8,6 @@ const socials = [
   { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
   { name: "Signal", url: `sgnl://signal.me/#u/${personalInfo.signal}`, icon: "simple-icons:signal" },
   { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
-  { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
 ].filter((s) => !!s.url);
 ---
 
@@ -27,7 +26,7 @@ const socials = [
       </div>
 
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center"
       >
         {
           socials.map((social) => (
@@ -57,17 +56,6 @@ const socials = [
         }
       </div>
 
-      <!-- /* FOOTER */ -->
-      <div class="pt-16 border-t border-white/10">
-        <div class="flex flex-col items-center gap-3 text-center">
-          <p class="text-gray-500 text-xs font-body w-full leading-relaxed">
-            The opinions expressed on this website are my own and do not necessarily reflect the views of my current or past employers.
-          </p>
-          <p class="text-gray-600 text-xs font-body">
-            {personalInfo.name} &copy; {new Date().getFullYear()}
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </section>

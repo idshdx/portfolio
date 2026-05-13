@@ -1,0 +1,87 @@
+---
+import { Icon } from "astro-icon/components";
+import { personalInfo } from '../data/site/personal';
+
+const links = [
+  { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
+  { name: "Company Page", url: "https://straja.org", icon: "mdi:office-building" },
+  { name: "Manual of Me", url: "https://my.manualof.me/s/07659ba778e00016af1dd53712179203", icon: "mdi:book-open-page-variant" },
+  { name: "Old Portfolio", url: "https://idshdx.github.io/portfolio-page/", icon: "mdi:archive" },
+  { name: "Site Source Code", url: "https://github.com/idshdx/portfolio", icon: "mdi:source-branch" },
+].filter((l) => !!l.url);
+---
+
+<section id="links" class="py-4 md:py-20 px-4 md:px-0">
+  <div class="container mx-auto">
+    <div class="links-reveal space-y-12">
+      <div class="mb-16">
+        <h2
+          class="text-3xl md:text-4xl font-heading font-bold text-white mb-2 flex items-center gap-4"
+        >
+          <span class="text-accent">/</span> Links
+        </h2>
+        <p class="text-gray font-body text-sm max-w-md">
+          More places to find me and my work.
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center"
+      >
+        {
+          links.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group p-8 bg-white/5 border border-white/10 rounded-3xl hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
+            >
+              <Icon
+                name={link.icon}
+                class="w-10 h-10 text-accent mb-4 mx-auto group-hover:scale-110 transition-transform"
+              />
+              <h3 class="text-white font-bold mb-1">{link.name}</h3>
+              <p class="text-gray-400 text-xs truncate px-2 transition-colors">
+                {link.url.replace("https://", "")}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initLinks() {
+    const section = document.querySelector(".links-reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("reveal");
+        });
+      },
+      { threshold: 0.1 },
+    );
+    if (section) observer.observe(section);
+  }
+
+  document.addEventListener('astro:page-load', initLinks);
+  initLinks();
+</script>
+
+<style>
+  .links-reveal {
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(.js) .links-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  :global(.js) .links-reveal.reveal {
+    opacity: 1 !important;
+    transform: translateY(0);
+  }
+</style>

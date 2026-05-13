@@ -37,7 +37,6 @@ const localData: ProfileData = {
     { name: "Email", url: `mailto:${personalInfo.email}`, icon: "mdi:email" },
     { name: "Signal", url: `sgnl://signal.me/#u/${personalInfo.signal}`, icon: "simple-icons:signal" },
     { name: "PGP", url: personalInfo.pgp_key_url, icon: "mdi:key" },
-    { name: "Personal Page", url: personalInfo.website, icon: "mdi:web" },
   ].filter((s) => !!s.url),
 };
 
@@ -106,7 +105,7 @@ const placeholderUrl = withBase('/placeholder.jpeg');
 
   <div class="mt-8 mb-4 flex flex-col sm:flex-row gap-4 items-center reveal-content" style="animation-delay: 400ms;">
     <a
-      href={siteUrl}
+      href={resumeUrl}
       target="_blank"
       rel="noopener noreferrer"
       class="group relative inline-flex items-center justify-center px-10 py-3 bg-accent/10 border border-accent/50 rounded-full text-white font-body transition-all duration-300
@@ -114,7 +113,7 @@ const placeholderUrl = withBase('/placeholder.jpeg');
              hover:bg-accent/20 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.35)]
              hover:scale-105"
     >
-      <span class="tracking-wide text-sm md:text-base font-medium">Let's work together</span>
+      <span class="tracking-wide text-sm md:text-base font-medium">View my CV</span>
       <div
         class="absolute inset-0 rounded-full blur-md bg-accent/20 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
       ></div>
