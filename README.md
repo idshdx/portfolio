@@ -7,8 +7,6 @@
 
 A high-performance, fully responsive personal portfolio and career site built with **Astro v6**, **Tailwind CSS v4**, and **TypeScript**. Content is managed entirely through data files — no component code changes required to update portfolio information.
 
-> **Origin:** This project was inspired by and initially based on work by [Nabil Akhunjee](https://github.com/nakhunjee). It has since been significantly extended with new features, sections, and content.
-
 ---
 
 ## 🌟 Highlights
@@ -87,17 +85,18 @@ A high-performance, fully responsive personal portfolio and career site built wi
 
 ## 📄 Site Sections
 
-| Section | Description |
-| :------ | :---------- |
-| **Home** | Hero intro with name, tagline, and primary CTAs |
-| **Projects** | Professional projects with tech stack; links to case study detail pages |
-| **Case Studies** | In-depth writeups: challenge, approach, results, and tech deep-dives |
-| **Open Source** | OSS contributions with detail pages (features, usage, install steps) |
-| **Tech** | Skills grouped by category (languages, frameworks, tools, cloud, etc.) |
-| **Career** | Work experience timeline and education |
-| **Interests** | Personal and professional interests with activity labels |
-| **Testimonials** | Recommendations from colleagues and clients |
-| **Contact** | Contact links (email, LinkedIn, GitHub, Signal, PGP key) |
+| Section          | Description                                                                        |
+|:-----------------|:-----------------------------------------------------------------------------------|
+| **Home**         | Hero intro with name, tagline, and primary CTAs                                    |
+| **About**        | Short about section                                                                |
+| **Projects**     | Professional projects with tech stack; links to case study detail pages            |
+| **Case Studies** | In-depth writeups: challenge, approach, results, and tech deep-dives               |
+| **Open Source**  | OSS contributions with detail pages (features, usage, install steps)               |
+| **Tech**         | Skills grouped by category (languages, frameworks, tools, cloud, etc.)             |
+| **Career**       | Work experience timeline and education                                             |
+| **Interests**    | Personal and professional interests with activity labels                           |
+| **Testimonials** | Recommendations from colleagues and clients                                        |
+| **Contact**      | Contact links (email, LinkedIn, GitHub, Signal, another personal website, PGP key) |
 
 ---
 
@@ -196,4 +195,4 @@ Tests cover:
 
 [MIT License](LICENSE) — Copyright © 2026 Andrei Botez.
 
-Based on an original work by [Nabil Akhunjee](https://github.com/nakhunjee), which served as the initial inspiration and foundation for this project.
+Based on the theme made by [Nabil Akhunjee](https://github.com/nakhunjee)
