@@ -1,4 +1,4 @@
-# CareerPortfolio — Andrei Botez
+# Career Portfolio Astro Theme
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Astro](https://img.shields.io/badge/Astro_v6-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
@@ -150,7 +150,7 @@ All portfolio content is managed through data files in `src/data/site/`. No comp
 
 1. **`astro.config.mjs`** — Set your `site` URL:
    ```js
-   site: 'https://<username>.github.io',
+   site: 'https://<username>.github.io'
    // base: '/<repo-name>',  // Uncomment if deploying to a subpath
    ```
 2. **`src/data/site/personal.ts`** — Fill in your personal details.
