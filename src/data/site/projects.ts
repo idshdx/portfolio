@@ -97,7 +97,7 @@ export const projects: Project[] = [
       role: "Backend Architecture & Team Lead",
       duration: "Client engagement",
       team: "Partnership with a UK-based web agency",
-      challenge: "The project required a maintainable backend for a mobile app whose feature set evolved during delivery. The system needed to model pets, reminders, records, custom labels, and tracker-style data while keeping frontend implementation aligned with backend capabilities across a distributed team.",
+      challenge: "The project required a maintainable backend for a mobile app whose feature set evolved during delivery. The system needed to model pets, reminders, records, custom labels, and tracker-style data while keeping frontend implementation aligned with backend capabilities across a distributed team that I managed.",
       approach: [
         "Designed API and data boundaries around users, pet profiles, reminders, records, labels, and tracker entries rather than overfitting the backend to a single screen flow.",
         "Coordinated frontend work by translating changing client needs into backend contracts, delivery priorities, and implementation checkpoints.",
