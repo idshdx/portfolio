@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { withBase } from "../utils/url";
 interface NavItem {
   label: string;
   href: string;
@@ -73,7 +74,7 @@ const navItems: NavItem[] = [
           navItems.map((item) => (
             <li class="flex-1 md:flex-none">
               <a
-                href={item.href}
+                href={withBase(item.href)}
                 class="flex flex-col items-center gap-1 text-gray-400 transition-colors text-xs md:text-base relative group"
               >
                 <div class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 nav-indicator hidden md:block" />
@@ -283,9 +284,13 @@ const navItems: NavItem[] = [
       const target = e.currentTarget as HTMLAnchorElement;
       const href = target.getAttribute("href") || "";
       
+      const destination = new URL(href, window.location.href);
+      const currentPath = window.location.pathname.replace(/\/index\.html$/, "/");
+      const destinationPath = destination.pathname.replace(/\/index\.html$/, "/");
+
       // Only smooth scroll if we are on the same page
-      if (href.startsWith("/#") || href.startsWith("#")) {
-        const targetId = href.split("#")[1];
+      if (href.startsWith("#") || destinationPath === currentPath) {
+        const targetId = destination.hash.slice(1);
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {

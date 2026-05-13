@@ -21,6 +21,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Determine Astro deploy URLs
+        id: astro-env
+        shell: bash
+        env:
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          SITE_URL_OVERRIDE: ${{ vars.SITE_URL }}
+          ASTRO_BASE_OVERRIDE: ${{ vars.ASTRO_BASE }}
+        run: |
+          if [[ "$REPOSITORY_NAME" == "$REPOSITORY_OWNER.github.io" ]]; then
+            default_site_url="https://${REPOSITORY_OWNER}.github.io"
+            default_base_path="/"
+          else
+            default_site_url="https://${REPOSITORY_OWNER}.github.io"
+            default_base_path="/${REPOSITORY_NAME}"
+          fi
+
+          echo "site_url=${SITE_URL_OVERRIDE:-$default_site_url}" >> "$GITHUB_OUTPUT"
+          echo "base_path=${ASTRO_BASE_OVERRIDE:-$default_base_path}" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -35,6 +58,9 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          SITE_URL: ${{ steps.astro-env.outputs.site_url }}
+          ASTRO_BASE: ${{ steps.astro-env.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

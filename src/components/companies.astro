@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 const companies = [
   { name: 'Avaya', icon: '/companies/avaya.svg' },
   { name: 'Luxoft', icon: '/companies/luxoft.svg' },
@@ -36,7 +38,7 @@ const tracks = [1, 2, 3];
             <div class="logo-wrapper flex items-center justify-center px-3 md:px-5 transition-all duration-300">
               <div class="bg-white/95 px-5 py-2.5 rounded-xl shadow-[0_0_10px_rgba(255,255,255,0.02)] border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] group/logo">
                 <img 
-                  src={company.icon} 
+                  src={withBase(company.icon)}
                   alt={company.name} 
                   title={company.name}
                   loading="lazy"

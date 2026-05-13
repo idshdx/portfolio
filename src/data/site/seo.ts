@@ -2,6 +2,7 @@ import { education } from './education';
 import { personalInfo } from './personal';
 import { workExperience } from './experience';
 import type { OssProject, Project } from './types';
+import { withBase } from '../../utils/url';
 
 type JsonLd =
   | {
@@ -92,7 +93,7 @@ function normalizePath(path: string) {
 }
 
 function toAbsoluteUrl(path: string) {
-  return new URL(normalizePath(path), siteUrl).toString();
+  return new URL(withBase(normalizePath(path)), siteUrl).toString();
 }
 
 function buildPersonStructuredData(): JsonLd {

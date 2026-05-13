@@ -1,5 +1,6 @@
 ---
 import { milestones } from '../data/site/milestones';
+import { withBase } from '../utils/url';
 ---
 
 <section id="career" class="py-20 px-4 md:px-0 max-w-6xl mx-auto overflow-hidden">
@@ -34,7 +35,7 @@ import { milestones } from '../data/site/milestones';
               <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
               {item.photo && (
                 <img
-                  src={item.photo}
+                  src={withBase(item.photo)}
                   alt={item.title}
                   class="w-full h-auto rounded-xl mb-4 opacity-80"
                 />
@@ -64,7 +65,7 @@ import { milestones } from '../data/site/milestones';
                   <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
                   {item.photo && (
                     <img
-                      src={item.photo}
+                      src={withBase(item.photo)}
                       alt={item.title}
                       class="w-full h-auto rounded-xl mb-4 opacity-80"
                     />
@@ -82,7 +83,7 @@ import { milestones } from '../data/site/milestones';
                   <h3 class="text-xl font-heading font-bold text-white mt-1 mb-3">{item.title}</h3>
                   {item.photo && (
                     <img
-                      src={item.photo}
+                      src={withBase(item.photo)}
                       alt={item.title}
                       class="w-full h-auto rounded-xl mb-4 opacity-80"
                     />

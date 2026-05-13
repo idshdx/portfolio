@@ -1,6 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { withBase } from '../utils/url';
 const { project } = Astro.props;
+const coverImage = withBase(project.caseStudy?.heroImage || '/placeholder.jpeg');
+const placeholderUrl = withBase('/placeholder.jpeg');
 ---
 
 <div class="project-card group relative flex flex-col h-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500">
@@ -11,11 +14,11 @@ const { project } = Astro.props;
     <div class="w-full h-full relative">
       <!-- Fallback safely handles missing image arrays -->
       <img 
-        src={project.caseStudy?.heroImage || '/placeholder.jpeg'} 
+        src={coverImage}
         alt={`${project.title} cover`}
         loading="lazy"
         decoding="async"
-        onerror="this.onerror=null;this.src='/placeholder.jpeg';"
+        onerror={`this.onerror=null;this.src='${placeholderUrl}';`}
         class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 z-0 opacity-100"
       />
     </div>
@@ -73,7 +76,7 @@ const { project } = Astro.props;
     <!-- Case Study CTA -->
     {project.caseStudy && (
       <a
-        href={`/case-study/${project.caseStudy.slug}`}
+        href={withBase(`/case-study/${project.caseStudy.slug}`)}
         class="mt-4 inline-flex items-center gap-2 text-accent text-sm font-bold hover:gap-3 transition-all duration-300 group/cta"
         aria-label={`View detailed case study for ${project.title}`}
       >

@@ -6,6 +6,7 @@ import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/inter';
 import Nav from "../components/nav.astro";
 import { defaultDescription, defaultSocialImage, siteName } from "../data/site/seo";
+import { withBase } from "../utils/url";
 
 interface Props {
   title: string;
@@ -26,7 +27,8 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(image, Astro.site);
+const socialImageURL = new URL(withBase(image), Astro.site);
+const faviconUrl = withBase('/favicon.ico');
 const documentTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const structuredDataItems = Array.isArray(structuredData)
   ? structuredData.filter(Boolean)
@@ -44,7 +46,7 @@ const structuredDataItems = Array.isArray(structuredData)
     <meta name="robots" content="index,follow" />
     <meta name="author" content={siteName} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/png" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href={faviconUrl} />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph -->

@@ -8,6 +8,7 @@ import {
   buildCaseStudyStructuredData,
 } from "../../data/site/seo";
 import type { Project } from "../../data/site/types";
+import { withBase } from "../../utils/url";
 
 export async function getStaticPaths() {
   const caseStudyProjects = projects.filter((p) => p.caseStudy);
@@ -55,7 +56,7 @@ const structuredData = [
 >
   <!-- Fixed Back Button -->
   <a
-    href="/#projects"
+    href={withBase("/#projects")}
     id="back-btn"
     class="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300 hover:text-accent hover:border-accent/40 backdrop-blur-md transition-all duration-300 group"
   >
@@ -72,7 +73,7 @@ const structuredData = [
       <!-- Hero Image -->
       <div class="absolute inset-0 w-full h-full">
         <img
-          src={cs.heroImage}
+          src={withBase(cs.heroImage)}
           alt={`${project.title} hero`}
           class="w-full h-full object-cover opacity-40"
         />
@@ -387,7 +388,7 @@ const structuredData = [
             {
               prevProject && (
                 <a
-                  href={`/case-study/${prevProject.caseStudy!.slug}`}
+                  href={withBase(`/case-study/${prevProject.caseStudy!.slug}`)}
                   class="group flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
                 >
                   <Icon
@@ -409,7 +410,7 @@ const structuredData = [
 
           <!-- Home -->
           <a
-            href="/#projects"
+            href={withBase("/#projects")}
             class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300 hover:text-accent hover:border-accent/40 transition-all duration-300 flex items-center gap-2"
           >
             <Icon name="mdi:view-grid-outline" class="w-4 h-4" />
@@ -421,7 +422,7 @@ const structuredData = [
             {
               nextProject && (
                 <a
-                  href={`/case-study/${nextProject.caseStudy!.slug}`}
+                  href={withBase(`/case-study/${nextProject.caseStudy!.slug}`)}
                   class="group inline-flex items-center gap-3 text-gray-400 hover:text-accent transition-colors"
                 >
                   <div>
@@ -449,27 +450,27 @@ const structuredData = [
       <div class="cs-reveal">
         <div class="border-t border-white/10 pt-10">
           <nav class="flex flex-wrap justify-center gap-x-10 gap-y-4">
-            <a href="/#home" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#home")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:home" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Home
             </a>
-            <a href="/#skills" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#skills")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:code-tags" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Skills
             </a>
-            <a href="/#career" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#career")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:work" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Career
             </a>
-            <a href="/#projects" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#projects")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:computer" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Case Studies
             </a>
-            <a href="/#open-source" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#open-source")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:source-branch" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Open Source
             </a>
-            <a href="/#contact" class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
+            <a href={withBase("/#contact")} class="flex items-center gap-2 text-gray-400 hover:text-accent transition-colors duration-300 text-sm group">
               <Icon name="mdi:message" class="w-4 h-4 group-hover:scale-110 transition-transform" />
               Contact
             </a>
