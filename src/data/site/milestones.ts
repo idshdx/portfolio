@@ -8,7 +8,7 @@ export interface Milestone {
 export const milestones: Milestone[] = [
   {
     year: '2002',
-    title: 'Script Kiddie',
+    title: 'The Script Kiddie',
     description:
       'I was 12y old when I got my first PC, was also one of the first in town to have an internet cable connection — a moment that sparked a lifelong passion for tinkering with computer hardware and software.',
     photo: '/timeline/hard.jpg',
@@ -29,7 +29,7 @@ export const milestones: Milestone[] = [
   },
   {
     year: '2019',
-    title: 'Founded an IT Consulting Business',
+    title: 'started an IT Consulting Business',
     description:
       'Launched an independent IT consulting business, bringing together years of hands-on engineering experience to deliver solutions for clients across fintech, telecom, and enterprise sectors.',
     photo: '/timeline/business-certificate.jpeg',
