@@ -6,9 +6,11 @@ import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 import sitemap from '@astrojs/sitemap';
 
+const site = process.env.SITE_URL ?? 'https://shady.straja.org';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.github.io',
+  site,
   // base: '/career-portfolio-template',
   vite: {
     plugins: [tailwindcss()]

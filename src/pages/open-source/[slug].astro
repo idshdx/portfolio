@@ -3,6 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import { ossProjects } from "../../data/site/oss";
 import { personalInfo } from "../../data/site/personal";
+import {
+  buildBreadcrumbStructuredData,
+  buildOpenSourceStructuredData,
+} from "../../data/site/seo";
 import type { OssProject } from "../../data/site/types";
 
 export async function getStaticPaths() {
@@ -23,11 +27,26 @@ const currentIndex = ossProjects.findIndex((p) => p.slug === project.slug);
 const prevProject = currentIndex > 0 ? ossProjects[currentIndex - 1] : null;
 const nextProject =
   currentIndex < ossProjects.length - 1 ? ossProjects[currentIndex + 1] : null;
+const pageTitle = `${project.title} open-source project`;
+const structuredData = [
+  buildBreadcrumbStructuredData([
+    { name: personalInfo.name, path: "/" },
+    { name: project.title, path: `/open-source/${project.slug}` },
+  ]),
+  buildOpenSourceStructuredData(project),
+];
 
 
 ---
 
-<Layout title={`${project.title} — Open Source`} showNav={false}>
+<Layout
+  title={pageTitle}
+  description={project.description}
+  image={project.heroImage}
+  type="article"
+  structuredData={structuredData}
+  showNav={false}
+>
   <!-- Fixed Back Button -->
   <a
     href="/#open-source"

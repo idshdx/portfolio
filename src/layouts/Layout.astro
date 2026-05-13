@@ -5,23 +5,34 @@ import '@fontsource-variable/space-grotesk';
 // Supports weights 100-900
 import '@fontsource-variable/inter';
 import Nav from "../components/nav.astro";
+import { defaultDescription, defaultSocialImage, siteName } from "../data/site/seo";
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
   showNav?: boolean;
+  type?: "website" | "article";
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const { 
   title, 
-  description = "Andrei Botez — fullstack engineer building secure, privacy-first software. 10+ years shipping production systems across enterprise, startup, and open-source.",
-  image = "/profile.jpg",
-  showNav = true 
+  description = defaultDescription,
+  image = defaultSocialImage,
+  showNav = true,
+  type = "website",
+  structuredData = []
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.site);
+const documentTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const structuredDataItems = Array.isArray(structuredData)
+  ? structuredData.filter(Boolean)
+  : structuredData
+    ? [structuredData]
+    : [];
 ---
 
 <!doctype html>
@@ -30,25 +41,34 @@ const socialImageURL = new URL(image, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content={siteName} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={documentTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:alt" content={documentTitle} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={documentTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content={documentTitle} />
 
-    <title>{title}</title>
+    {structuredDataItems.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
+
+    <title>{documentTitle}</title>
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="bg-background relative min-h-screen overflow-x-hidden antialiased">

@@ -8,6 +8,7 @@ export const personalInfo = {
   signal: "shdx.01",
   cv_pdf: "cv.pdf",
   cv_latex: "cv-latex.zip",
+  site_url: "https://straja.org",
   pgp_fingerprint: "EC5961CAF33949D300D1530FC955DF8349BC0C31",
   pgp_key_url: "https://keys.openpgp.org/search?q=andrei@straja.org",
 };

@@ -9,7 +9,7 @@ import Companies from "../components/companies.astro";
 import OssProjects from "../components/oss-projects.astro";
 import Testimonials from "../components/testimonials.astro";
 import Interests from "../components/interests.astro";
-import { personalInfo } from '../data/site/personal';
+import { buildHomeStructuredData, homeDescription, homeTitle } from "../data/site/seo";
 
 interface ProfileData {
   webpageTitle: string;
@@ -18,7 +18,7 @@ interface ProfileData {
 const isApiLive = import.meta.env.PROD; // Auto true in production
 const BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 
-let data: ProfileData = { webpageTitle: `${personalInfo.name} — Fullstack Engineer` };
+let data: ProfileData = { webpageTitle: homeTitle };
 
 if (isApiLive && BASE_URL) {
   try {
@@ -30,10 +30,14 @@ if (isApiLive && BASE_URL) {
   }
 }
 
-const { webpageTitle } = data;
+const pageTitle = data.webpageTitle?.trim() || homeTitle;
 ---
 
-<Layout title={webpageTitle}>
+<Layout
+  title={pageTitle}
+  description={homeDescription}
+  structuredData={buildHomeStructuredData()}
+>
 	<Home />
 	<Companies />
 	<Tech />
