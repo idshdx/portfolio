@@ -10,7 +10,7 @@ export const milestones: Milestone[] = [
     year: '2002',
     title: 'The Script Kiddie',
     description:
-      'I stopped using my parent\'s 386 work computer when I was 12y old and got my first PC, being one of the first in town to have an internet cable connection — a moment that sparked a lifelong passion for tinkering with computer hardware and software.',
+      'I was 12y old when I got my first PC, being one of the first in town to have an internet cable connection — a moment that sparked a lifelong passion for tinkering with computer hardware and software.',
     photo: '/timeline/hard.jpg',
   },
   {
