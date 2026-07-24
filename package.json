@@ -19,7 +19,7 @@
     "@iconify-json/skill-icons": "^1.2.4",
     "@iconify-json/vscode-icons": "^1.2.45",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^7.0.9",
+    "astro": "^7.1.0",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.8.3"
