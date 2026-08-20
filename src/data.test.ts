@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ossProjects } from './data/site/oss';
+import { personalInfo } from './data/site/personal';
 import type { OssProject } from './data/site/types';
 
 describe('ossProjects data model', () => {
@@ -87,4 +88,49 @@ describe('ossProjects data model', () => {
       });
     });
   });
+
+  describe('personalInfo introSection', () => {
+    it('exists and is defined', () => {
+      expect(personalInfo.introSection).toBeDefined();
+    });
+
+    it('has non-empty title and subtitle', () => {
+      expect(typeof personalInfo.introSection.title).toBe('string');
+      expect(personalInfo.introSection.title.trim().length).toBeGreaterThan(0);
+      expect(typeof personalInfo.introSection.subtitle).toBe('string');
+      expect(personalInfo.introSection.subtitle.trim().length).toBeGreaterThan(0);
+    });
+
+    it('has a non-empty description', () => {
+      expect(typeof personalInfo.introSection.description).toBe('string');
+      expect(personalInfo.introSection.description.trim().length).toBeGreaterThan(0);
+    });
+
+    it('has valid highlights', () => {
+      const highlights = personalInfo.introSection.highlights;
+      expect(Array.isArray(highlights)).toBe(true);
+      expect(highlights.length).toBeGreaterThan(0);
+      highlights.forEach((hl) => {
+        expect(typeof hl.title).toBe('string');
+        expect(hl.title.trim().length).toBeGreaterThan(0);
+        expect(typeof hl.icon).toBe('string');
+        expect(hl.icon.trim().length).toBeGreaterThan(0);
+        expect(typeof hl.description).toBe('string');
+        expect(hl.description.trim().length).toBeGreaterThan(0);
+      });
+    });
+
+    it('has valid stats', () => {
+      const stats = personalInfo.introSection.stats;
+      expect(Array.isArray(stats)).toBe(true);
+      expect(stats.length).toBeGreaterThan(0);
+      stats.forEach((st) => {
+        expect(typeof st.value).toBe('string');
+        expect(st.value.trim().length).toBeGreaterThan(0);
+        expect(typeof st.label).toBe('string');
+        expect(st.label.trim().length).toBeGreaterThan(0);
+      });
+    });
+  });
 });
+

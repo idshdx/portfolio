@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Home from "../components/home.astro";
+import Intro from "../components/intro.astro";
 import Tech from "../components/tech.astro";
 import Projects from "../components/projects.astro";
 import Contact from "../components/contact.astro";
@@ -42,6 +43,7 @@ const pageTitle = data.webpageTitle?.trim() || homeTitle;
 >
 	<Home />
 	<Companies />
+	<Intro />
 	<Tech />
 	<Career />
 	<Projects />

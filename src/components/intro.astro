@@ -1,0 +1,146 @@
+---
+import { Icon } from "astro-icon/components";
+import { personalInfo } from '../data/site/personal';
+
+const { introSection } = personalInfo;
+const { title, subtitle, description, highlights, stats } = introSection;
+---
+
+<section id="intro" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden relative">
+  <!-- Background Ambient Glow -->
+  <div
+    class="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/3 rounded-full blur-[120px] pointer-events-none"
+  ></div>
+
+  <div class="container mx-auto relative z-10">
+    <div class="intro-reveal space-y-16">
+      
+      <!-- Section Header -->
+      <div class="max-w-3xl">
+        <h2
+          class="text-3xl md:text-4xl font-heading font-bold text-white mb-4 flex items-center gap-4"
+        >
+          <span class="text-accent">/</span> {title}
+        </h2>
+        <p class="text-gray-400 font-heading text-lg font-semibold tracking-wide uppercase text-accent/80 mb-2">
+          {subtitle}
+        </p>
+        <p class="text-gray font-body text-base/relaxed md:text-lg/relaxed max-w-4xl">
+          {description}
+        </p>
+      </div>
+
+      <!-- Highlights Grid & Stats -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Highlights (Left 2 Columns) -->
+        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {
+            highlights.map((highlight) => (
+              <div class="intro-card group relative p-6 rounded-2xl border border-white/8 bg-white/3 backdrop-blur-sm hover:border-accent/30 hover:bg-white/5 transition-all duration-500">
+                <div class="mb-4 flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                    <Icon name={highlight.icon} class="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h3 class="text-base font-heading font-semibold text-white group-hover:text-accent/90 transition-colors duration-300">
+                    {highlight.title}
+                  </h3>
+                </div>
+                <p class="text-gray-400 text-sm font-body leading-relaxed">
+                  {highlight.description}
+                </p>
+                <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border border-accent/10" />
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Stats (Right Column) -->
+        <div class="intro-card stats-card p-6 md:p-8 rounded-2xl border border-white/8 bg-white/3 backdrop-blur-sm hover:border-accent/30 hover:bg-white/5 transition-all duration-500 flex flex-col justify-between gap-6">
+          <h3 class="text-xs font-heading font-semibold text-accent/80 uppercase tracking-widest">
+            Impact & Metrics
+          </h3>
+          <div class="grid grid-cols-1 gap-6 divide-y divide-white/10">
+            {
+              stats.map((stat, idx) => (
+                <div class={`${idx > 0 ? "pt-4" : ""} flex flex-col`}>
+                  <span class="text-3xl md:text-4xl font-heading font-bold text-white tracking-tight group-hover:text-accent transition-colors duration-500">
+                    {stat.value}
+                  </span>
+                  <span class="text-gray-400 text-xs font-body uppercase tracking-wide mt-1">
+                    {stat.label}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+          <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border border-accent/10" />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro-reveal {
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(.js) .intro-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  :global(.js) .intro-reveal.reveal {
+    opacity: 1 !important;
+    transform: translateY(0);
+  }
+
+  .intro-card {
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.5s ease,
+      background-color 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+
+  :global(.js) .intro-card {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  :global(.js) .intro-reveal.reveal .intro-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .intro-reveal.reveal .intro-card:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+  .intro-reveal.reveal .intro-card:nth-child(2) {
+    transition-delay: 0.15s;
+  }
+  .intro-reveal.reveal .intro-card:nth-child(3) {
+    transition-delay: 0.25s;
+  }
+</style>
+
+<script>
+  const revealIntro = () => {
+    const section = document.querySelector(".intro-reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("reveal");
+        });
+      },
+      { threshold: 0.1 },
+    );
+    if (section) observer.observe(section);
+  };
+  revealIntro();
+  document.addEventListener("astro:after-swap", revealIntro);
+</script>

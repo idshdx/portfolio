@@ -86,3 +86,23 @@ export interface OssProject {
   status?: 'Active' | 'Archived' | 'Experimental';
   keyTakeaways?: string[];
 }
+
+export interface IntroHighlight {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+export interface IntroStat {
+  value: string;
+  label: string;
+}
+
+export interface IntroSection {
+  title: string;
+  subtitle: string;
+  description: string;
+  highlights: IntroHighlight[];
+  stats: IntroStat[];
+}
+
