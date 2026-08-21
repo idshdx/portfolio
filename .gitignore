@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 .junie/
 .kiro/
+# gemini instruction file
+GEMINI.md
