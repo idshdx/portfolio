@@ -15,14 +15,15 @@ export const personalInfo = {
     title: 'Intro',
     subtitle: 'A brief overview of my engineering background and what you\'ll find on this site.',
     paragraphs: [
-      'Welcome. I\'m Andrei—a web developer and consultant focused on building reliable web applications and practical backend architecture. Whether refactoring complex legacy systems or launching new products from scratch, I value pragmatism, observability, and robust engineering over temporary trends.',
-      'This portfolio serves as an open record of my technical path, architectural approach, and production engagements.'
+      'I’m a software engineer and consultant with over a decade of hands-on experience building, scaling, and maintaining web systems. My work spans everything from high-throughput enterprise platforms and legacy monolith extractions to privacy-focused software and independent technical consulting.',
+      'This portfolio serves as an open record of my technical path and engagements.'
     ],
-    guideTitle: 'What you\'ll find below',
+    guideTitle: 'What you\'ll find on this page',
     guideItems: [
       { label: 'Tech Skills', description: 'Core frameworks, databases, and Linux/DevOps tooling.' },
       { label: 'Milestones', description: 'Key timeline moments from my first PC to running a consulting business.' },
-      { label: 'Case Studies', description: 'Production architectural deep dives and delivery outcomes.' }
+      { label: 'Case Studies', description: 'Production architectural deep dives and delivery outcomes.' },
+      { label: 'Links', description: 'More about about me.' }
     ]
   }
 };
