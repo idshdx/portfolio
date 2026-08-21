@@ -87,22 +87,15 @@ export interface OssProject {
   keyTakeaways?: string[];
 }
 
-export interface IntroHighlight {
-  title: string;
-  icon: string;
-  description: string;
-}
-
-export interface IntroStat {
-  value: string;
+export interface IntroGuideItem {
   label: string;
+  description: string;
 }
 
 export interface IntroSection {
   title: string;
   subtitle: string;
-  description: string;
-  highlights: IntroHighlight[];
-  stats: IntroStat[];
+  paragraphs: string[];
+  guideTitle: string;
+  guideItems: IntroGuideItem[];
 }
-

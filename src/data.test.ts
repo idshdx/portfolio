@@ -89,48 +89,43 @@ describe('ossProjects data model', () => {
     });
   });
 
-  describe('personalInfo introSection', () => {
-    it('exists and is defined', () => {
+  describe("personalInfo introSection", () => {
+    it("exists and is defined", () => {
       expect(personalInfo.introSection).toBeDefined();
     });
 
-    it('has non-empty title and subtitle', () => {
-      expect(typeof personalInfo.introSection.title).toBe('string');
+    it("has non-empty title and subtitle", () => {
+      expect(typeof personalInfo.introSection.title).toBe("string");
       expect(personalInfo.introSection.title.trim().length).toBeGreaterThan(0);
-      expect(typeof personalInfo.introSection.subtitle).toBe('string');
+      expect(typeof personalInfo.introSection.subtitle).toBe("string");
       expect(personalInfo.introSection.subtitle.trim().length).toBeGreaterThan(0);
     });
 
-    it('has a non-empty description', () => {
-      expect(typeof personalInfo.introSection.description).toBe('string');
-      expect(personalInfo.introSection.description.trim().length).toBeGreaterThan(0);
-    });
-
-    it('has valid highlights', () => {
-      const highlights = personalInfo.introSection.highlights;
-      expect(Array.isArray(highlights)).toBe(true);
-      expect(highlights.length).toBeGreaterThan(0);
-      highlights.forEach((hl) => {
-        expect(typeof hl.title).toBe('string');
-        expect(hl.title.trim().length).toBeGreaterThan(0);
-        expect(typeof hl.icon).toBe('string');
-        expect(hl.icon.trim().length).toBeGreaterThan(0);
-        expect(typeof hl.description).toBe('string');
-        expect(hl.description.trim().length).toBeGreaterThan(0);
+    it("has a non-empty array of paragraphs", () => {
+      const paragraphs = personalInfo.introSection.paragraphs;
+      expect(Array.isArray(paragraphs)).toBe(true);
+      expect(paragraphs.length).toBeGreaterThan(0);
+      paragraphs.forEach((p) => {
+        expect(typeof p).toBe("string");
+        expect(p.trim().length).toBeGreaterThan(0);
       });
     });
 
-    it('has valid stats', () => {
-      const stats = personalInfo.introSection.stats;
-      expect(Array.isArray(stats)).toBe(true);
-      expect(stats.length).toBeGreaterThan(0);
-      stats.forEach((st) => {
-        expect(typeof st.value).toBe('string');
-        expect(st.value.trim().length).toBeGreaterThan(0);
-        expect(typeof st.label).toBe('string');
-        expect(st.label.trim().length).toBeGreaterThan(0);
+    it("has a non-empty guideTitle", () => {
+      expect(typeof personalInfo.introSection.guideTitle).toBe("string");
+      expect(personalInfo.introSection.guideTitle.trim().length).toBeGreaterThan(0);
+    });
+
+    it("has valid guideItems", () => {
+      const items = personalInfo.introSection.guideItems;
+      expect(Array.isArray(items)).toBe(true);
+      expect(items.length).toBeGreaterThan(0);
+      items.forEach((item) => {
+        expect(typeof item.label).toBe("string");
+        expect(item.label.trim().length).toBeGreaterThan(0);
+        expect(typeof item.description).toBe("string");
+        expect(item.description.trim().length).toBeGreaterThan(0);
       });
     });
   });
 });
-
