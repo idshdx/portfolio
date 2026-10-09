@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project at a glance
-- Astro v6 static portfolio theme with Tailwind CSS v4 and TypeScript.
+- Astro v7 static portfolio theme with Tailwind CSS v4 and TypeScript.
 - The site is data-driven: most content lives in `src/data/site/*.ts` and `src/data/*.json`; components mainly render that data.
 - The home page (`src/pages/index.astro`) composes the full one-page site from section components in `src/components/`.
 - Dynamic pages are generated with `getStaticPaths()` in `src/pages/case-study/[slug].astro` and `src/pages/open-source/[slug].astro`.

@@ -1,11 +1,11 @@
 # Career Portfolio Astro Theme
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Astro](https://img.shields.io/badge/Astro_v6-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
+[![Astro](https://img.shields.io/badge/Astro_v7-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![CI/CD](https://img.shields.io/badge/GitHub_Actions-Deploy-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-A high-performance, fully responsive personal portfolio and career site built with **Astro v6**, **Tailwind CSS v4**, and **TypeScript**. Content is managed entirely through data files — no component code changes required to update portfolio information.
+A high-performance, fully responsive personal portfolio and career site built with **Astro v7**, **Tailwind CSS v4**, and **TypeScript**. Content is managed entirely through data files — no component code changes required to update portfolio information.
 
 ---
 
@@ -25,7 +25,7 @@ A high-performance, fully responsive personal portfolio and career site built wi
 
 | Layer | Technology |
 | :---- | :--------- |
-| Framework | [Astro v6](https://astro.build/) (Static Site Generation) |
+| Framework | [Astro v7](https://astro.build/) (Static Site Generation) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com/) via `@tailwindcss/vite` |
 | Icons | [Iconify](https://iconify.design/) via `astro-icon` (MDI, Simple Icons, Skill Icons, VSCode Icons) |
 | Fonts | Inter Variable, Space Grotesk Variable via `@fontsource-variable` |
