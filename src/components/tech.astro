@@ -77,11 +77,15 @@ try {
 } catch {
   categories = localTechData.categories;
 }
+
+const domainCategory = categories.find((c) => c.title.toLowerCase().includes("domain")) || categories[0];
+const otherCategories = categories.filter((c) => c !== domainCategory);
 ---
 
 <section id="skills" class="py-12 md:py-24 px-4 md:px-0 overflow-hidden">
   <div class="container mx-auto">
-    <div class="mb-16 max-w-2xl">
+    <!-- Header -->
+    <div class="mb-12 md:mb-16 max-w-2xl">
       <h2
         class="text-3xl md:text-4xl font-heading font-bold text-white mb-4 flex items-center gap-4"
       >
@@ -93,44 +97,152 @@ try {
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-      {
-        categories.map((category) => (
-          <div
-            class={`domain-card group relative p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-500 overflow-hidden ${category.title === "Domain Skills" ? "lg:col-span-2" : ""}`}
-          >
-            {/* Subtle gradient background effect on hover */}
-            <div class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <!-- Domain Skills: Always visible and expanded -->
+    {domainCategory && (
+      <div
+        class="domain-card group relative p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-500 overflow-hidden mb-8 md:mb-10"
+      >
+        <div class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            <div class="relative z-10">
-              <div class="flex items-center gap-4 mb-8">
-                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-background transition-colors duration-300 shadow-lg">
-                  <Icon name={category.icon} class="w-6 h-6" />
-                </div>
-                <h3 class="text-xl font-heading font-semibold text-white/90">
-                  {category.title}
-                </h3>
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-8">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-background transition-colors duration-300 shadow-lg shrink-0">
+                <Icon name={domainCategory.icon} class="w-6 h-6" />
               </div>
-
-              <div class="flex flex-wrap gap-2.5">
-                {category.skills.map((skill) => (
-                  <div class="skill-pill flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-accent/50 hover:bg-white/10 transition-all duration-300 cursor-default shadow-sm">
-                    <Icon
-                      name={skill.icon}
-                      class="w-4 h-4 text-white/50 group-hover:text-accent transition-colors"
-                    />
-                    <span class="text-sm font-body text-gray-400 group-hover:text-white transition-colors">
-                      {skill.name}
-                    </span>
-                  </div>
-                ))}
+              <div>
+                <h3 class="text-xl md:text-2xl font-heading font-semibold text-white/90">
+                  {domainCategory.title}
+                </h3>
+                <p class="text-xs md:text-sm text-gray-400 font-body">
+                  Core competencies & architecture services
+                </p>
               </div>
             </div>
+            <div class="self-start sm:self-center">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-accent bg-accent/10 border border-accent/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                Primary Focus
+              </span>
+            </div>
           </div>
-        ))
+
+          <div class="flex flex-wrap gap-2.5">
+            {domainCategory.skills.map((skill) => (
+              <div class="skill-pill flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-accent/50 hover:bg-white/10 transition-all duration-300 cursor-default shadow-sm">
+                <Icon
+                  name={skill.icon}
+                  class="w-4 h-4 text-white/50 group-hover:text-accent transition-colors shrink-0"
+                />
+                <span class="text-sm font-body text-gray-300 group-hover:text-white transition-colors">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Technical Categories Section Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div>
+        <h3 class="text-lg md:text-xl font-heading font-semibold text-white/90 flex items-center gap-2">
+          <span class="text-accent text-sm font-mono">&gt;</span> Technical Stack & Tooling
+        </h3>
+        <p class="text-xs md:text-sm text-gray-400 font-body">
+          Click any section below to reveal specific languages, tools, and infrastructure
+        </p>
+      </div>
+      <button
+        type="button"
+        id="toggle-all-categories"
+        class="self-start sm:self-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-accent/40 text-xs font-mono text-gray-300 hover:text-white transition-all duration-200 cursor-pointer select-none group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        aria-expanded="false"
+      >
+        <Icon name="mdi:unfold-more-horizontal" class="w-4 h-4 text-accent" id="toggle-all-icon" />
+        <span id="toggle-all-text">Expand All</span>
+      </button>
+    </div>
+
+    <!-- Collapsible Categories Grid: Hidden by default -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
+      {
+        otherCategories.map((category) => {
+          const categorySlug = category.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          return (
+            <div
+              class="collapsible-skill-card group/card relative rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 overflow-hidden"
+              data-category-slug={categorySlug}
+            >
+              <div class="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+              <button
+                type="button"
+                class="skill-accordion-trigger w-full p-5 md:p-6 flex items-center justify-between text-left transition-colors duration-200 cursor-pointer select-none relative z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
+                aria-expanded="false"
+                aria-controls={`skill-panel-${categorySlug}`}
+                id={`skill-btn-${categorySlug}`}
+              >
+                <div class="flex items-center gap-3.5 md:gap-4 min-w-0">
+                  <div class="trigger-icon-box w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-accent group-hover/card:bg-accent group-hover/card:text-background transition-colors duration-300 shadow-md shrink-0">
+                    <Icon name={category.icon} class="w-5 h-5" />
+                  </div>
+                  <div class="min-w-0">
+                    <h4 class="text-base md:text-lg font-heading font-semibold text-white/90 group-hover/card:text-white transition-colors truncate">
+                      {category.title}
+                    </h4>
+                    <span class="text-xs text-gray-400 font-body">
+                      {category.skills.length} skills & tools
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0 ml-3">
+                  <span class="status-indicator text-xs font-mono text-gray-400 hidden sm:inline-block px-2.5 py-1 rounded-full bg-white/5 border border-white/10 group-hover/card:text-gray-200 transition-colors">
+                    Show
+                  </span>
+                  <div class="chevron-box w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 group-hover/card:text-accent group-hover/card:bg-white/10 transition-all duration-300">
+                    <Icon
+                      name="mdi:chevron-down"
+                      class="w-5 h-5 transition-transform duration-300 chevron-icon"
+                    />
+                  </div>
+                </div>
+              </button>
+
+              <div
+                id={`skill-panel-${categorySlug}`}
+                class="skill-accordion-panel collapsible-content"
+                role="region"
+                aria-labelledby={`skill-btn-${categorySlug}`}
+                hidden="until-found"
+              >
+                <div class="collapsible-inner">
+                  <div class="px-5 pb-6 md:px-6 md:pb-6 pt-1 border-t border-white/5">
+                    <div class="flex flex-wrap gap-2.5 pt-3">
+                      {category.skills.map((skill) => (
+                        <div class="skill-pill flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-accent/50 hover:bg-white/10 transition-all duration-300 cursor-default shadow-sm">
+                          <Icon
+                            name={skill.icon}
+                            class="w-4 h-4 text-white/50 group-hover:text-accent transition-colors shrink-0"
+                          />
+                          <span class="text-sm font-body text-gray-400 group-hover:text-white transition-colors">
+                            {skill.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
       }
     </div>
 
+    <!-- Footer caption -->
     <div class="mt-12 text-center">
       <p class="text-gray-500 font-body text-sm italic reveal-content" style="animation-delay: 1200ms;">
         And many more tools not listed, with various levels of proficiency
@@ -142,7 +254,7 @@ try {
 <style>
   /* Base state for animations */
   .skill-pill {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .domain-card {
@@ -158,52 +270,204 @@ try {
     transform: translateY(-2px);
   }
 
+  /* Grid height animation for accordion */
+  .collapsible-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .collapsible-content.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .collapsible-inner {
+    overflow: hidden;
+  }
+
+  /* Chevron rotation */
+  .collapsible-skill-card.is-expanded .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Active card highlight */
+  .collapsible-skill-card.is-expanded {
+    border-color: rgba(164, 118, 255, 0.35);
+    background-color: rgba(255, 255, 255, 0.07);
+  }
+
+  .collapsible-skill-card.is-expanded .trigger-icon-box {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+
   /* Revealed state — only hide when JS is available */
   :global(.js) .skill-pill {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateY(0.75rem);
   }
 
   :global(.js) .skill-pill.reveal {
     opacity: 1 !important;
     transform: translateY(0);
   }
+
+  /* Progressive enhancement: when JS is absent, keep content accessible */
+  :global(html:not(.js)) .skill-accordion-panel {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+  }
+  :global(html:not(.js)) .skill-accordion-panel[hidden] {
+    display: block !important;
+  }
+  :global(html:not(.js)) .status-indicator,
+  :global(html:not(.js)) #toggle-all-categories {
+    display: none !important;
+  }
 </style>
 
 <script>
-  function initTechAnimations() {
-    const cards = document.querySelectorAll(".domain-card");
+  function initTechSkills() {
+    // 1. Reveal domain card pills on scroll
+    const domainCard = document.querySelector(".domain-card");
+    if (domainCard) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const pills = domainCard.querySelectorAll(".skill-pill");
+              pills.forEach((pill, idx) => {
+                setTimeout(() => {
+                  pill.classList.add("reveal");
+                }, idx * 25);
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        }
+      );
+      observer.observe(domainCard);
+    }
 
-    // Animate pills staggering locally within each card
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const card = entry.target;
-            const pills = card.querySelectorAll(".skill-pill");
+    // 2. Collapsible accordion cards setup
+    const cards = document.querySelectorAll(".collapsible-skill-card");
+    const toggleAllBtn = document.getElementById("toggle-all-categories");
+    const toggleAllText = document.getElementById("toggle-all-text");
 
-            pills.forEach((pill, idx) => {
-              setTimeout(() => {
-                pill.classList.add("reveal");
-              }, idx * 30); // 30ms stagger per pill
-            });
+    function updateToggleAllState() {
+      if (!toggleAllBtn || !toggleAllText) return;
+      const allTriggers = document.querySelectorAll(".skill-accordion-trigger");
+      const openCount = Array.from(allTriggers).filter(
+        (t) => t.getAttribute("aria-expanded") === "true"
+      ).length;
 
-            observer.unobserve(card);
+      if (openCount === allTriggers.length && allTriggers.length > 0) {
+        toggleAllBtn.setAttribute("aria-expanded", "true");
+        toggleAllText.textContent = "Collapse All";
+      } else {
+        toggleAllBtn.setAttribute("aria-expanded", "false");
+        toggleAllText.textContent = "Expand All";
+      }
+    }
+
+    function openCard(card: Element, trigger: Element, panel: HTMLElement) {
+      trigger.setAttribute("aria-expanded", "true");
+      card.classList.add("is-expanded");
+      panel.classList.add("is-open");
+      panel.removeAttribute("hidden");
+
+      const statusEl = card.querySelector(".status-indicator");
+      if (statusEl) statusEl.textContent = "Hide";
+
+      const pills = panel.querySelectorAll(".skill-pill");
+      pills.forEach((pill, idx) => {
+        setTimeout(() => {
+          pill.classList.add("reveal");
+        }, idx * 20);
+      });
+
+      updateToggleAllState();
+    }
+
+    function closeCard(card: Element, trigger: Element, panel: HTMLElement) {
+      trigger.setAttribute("aria-expanded", "false");
+      card.classList.remove("is-expanded");
+      panel.classList.remove("is-open");
+
+      const statusEl = card.querySelector(".status-indicator");
+      if (statusEl) statusEl.textContent = "Show";
+
+      setTimeout(() => {
+        if (trigger.getAttribute("aria-expanded") === "false") {
+          panel.setAttribute("hidden", "until-found");
+        }
+      }, 350);
+
+      updateToggleAllState();
+    }
+
+    cards.forEach((card) => {
+      const trigger = card.querySelector(".skill-accordion-trigger");
+      const panel = card.querySelector(".skill-accordion-panel") as HTMLElement | null;
+      if (!trigger || !panel) return;
+
+      // Click to toggle
+      trigger.addEventListener("click", () => {
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        if (isExpanded) {
+          closeCard(card, trigger, panel);
+        } else {
+          openCard(card, trigger, panel);
+        }
+      });
+
+      // Browser native find-in-page support (beforematch)
+      panel.addEventListener("beforematch", () => {
+        openCard(card, trigger, panel);
+      });
+    });
+
+    // Toggle All Button handler
+    if (toggleAllBtn) {
+      toggleAllBtn.addEventListener("click", () => {
+        const isAllExpanded = toggleAllBtn.getAttribute("aria-expanded") === "true";
+        cards.forEach((card) => {
+          const trigger = card.querySelector(".skill-accordion-trigger");
+          const panel = card.querySelector(".skill-accordion-panel") as HTMLElement | null;
+          if (!trigger || !panel) return;
+
+          if (isAllExpanded) {
+            closeCard(card, trigger, panel);
+          } else {
+            openCard(card, trigger, panel);
           }
         });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      },
-    );
+      });
+    }
 
-    cards.forEach((card) => observer.observe(card));
+    // Auto-open if hash matches category slug on page load
+    if (window.location.hash) {
+      const hash = window.location.hash.replace("#", "").toLowerCase();
+      cards.forEach((card) => {
+        const slug = card.getAttribute("data-category-slug");
+        if (slug && hash.includes(slug)) {
+          const trigger = card.querySelector(".skill-accordion-trigger");
+          const panel = card.querySelector(".skill-accordion-panel") as HTMLElement | null;
+          if (trigger && panel) openCard(card, trigger, panel);
+        }
+      });
+    }
   }
 
-  // Runs on initial load
-  initTechAnimations();
+  // Initialize on load
+  initTechSkills();
 
-  // Necessary for Astro View Transitions if you use them
-  document.addEventListener("astro:after-swap", initTechAnimations);
+  // Astro View Transitions support
+  document.addEventListener("astro:after-swap", initTechSkills);
 </script>
